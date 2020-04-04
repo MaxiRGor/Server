@@ -42,6 +42,9 @@
     <div>The list is empty but you can add a new film</div>
 </c:if>
 
+<br>
+<div>Pages: </div>
+
 <c:forEach begin="${1}" end="${pagesCount}" step="1" varStatus="i">
     <c:url value="/films" var="url">
         <c:param name="page" value="${i.index}"/>
@@ -53,5 +56,10 @@
 <h4>
     <a href="${add}">Add new film</a>
 </h4>
+
+<c:url value="/" var="mainPage"/>
+<h3>
+    <a href="${mainPage}">Main Page</a>
+</h3>
 </body>
 </html>

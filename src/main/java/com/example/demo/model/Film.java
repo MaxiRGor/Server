@@ -6,71 +6,57 @@ import javax.persistence.*;
 @Table(name = "films")
 public class Film {
 
+    private int id;
+    private String title;
+    private int year;
+    private String genre;
+    private boolean watched;
+
     @Id
     @Column(name = "id", unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "year")
-    private int year;
-
-    @Column(name = "genre")
-    private String genre;
-
-    @Column(name = "watched" )
-    private boolean watched;
-
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
+    @Column(name = "title")
     public String getTitle() {
         return title;
+    }
+
+    @Column(name = "year")
+    public int getYear() {
+        return year;
+    }
+
+    @Column(name = "genre")
+    public String getGenre() {
+        return genre;
+    }
+
+    @Column(name = "watched")
+    public boolean isWatched() {
+        return watched;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public int getYear() {
-        return year;
-    }
-
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public String getGenre() {
-        return genre;
     }
 
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
-    public boolean isWatched() {
-        return watched;
-    }
-
     public void setWatched(boolean watched) {
         this.watched = watched;
-    }
-
-    @Override
-    public String toString() {
-        return "Film{ " +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", year=" + year +
-                ", genre='" + genre + '\'' +
-                ", watched=" + watched +
-                '}';
     }
 }

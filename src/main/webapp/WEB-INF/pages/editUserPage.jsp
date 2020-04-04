@@ -12,21 +12,22 @@
     <title>Edit User</title>
 </head>
 <body>
-<c:url value="/editUser" var="var"/>
+<c:url value="/users/edit" var="var"/>
 <form action="${var}" method="POST">
-    <input type="hidden" name="id" value="${user.id}">
-    <label for="id">Id</label>
-    <input type="text" name="id" id="id" value="${user.id}">
-    <label for="role">Role</label>
-    <input type="text" name="role" id="role" value="${user.role}">
-    <label for="nickName">Nickname</label>
-    <input type="text" name="nickName" id="nickName" value="${user.nickName}">
-    <label for="deviceId">Device Id</label>
-    <input type="text" name="deviceId" id="deviceId" value="${user.deviceId}">
-    <label for="levelNumber">Level Number</label>
-    <input type="text" name="levelNumber" id="levelNumber" value="${user.levelNumber}">
+
+    <input type="hidden" name="id"  value="${user.id}" >
+
+    <label for="nickname">Nickname</label>
+    <input type="text" name="nickname" id="nickname" value="${user.nickname}">
+
     <label for="highScore">High Score</label>
     <input type="text" name="highScore" id="highScore" value="${user.highScore}">
+
+    <label for="coinsAmount">Coins Amount</label>
+    <input type="text" name="coinsAmount" id="coinsAmount" value="${user.coinsAmount}" >
+
+    <label for="crystalsAmount">Crystals Amount</label>
+    <input type="text" name="crystalsAmount" id="crystalsAmount" value="${user.crystalsAmount}">
 
     <input type="submit" value="Edit user">
 </form>

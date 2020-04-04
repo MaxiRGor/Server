@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.FilmDAO;
 import com.example.demo.dao.UserDAO;
-import com.example.demo.model.UserData;
+import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,31 +21,31 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public List<UserData> allUsers(int page) {
+    public List<User> allUsers(int page) {
         return userDAO.allUsers(page);
     }
 
     @Override
     @Transactional
-    public void add(UserData userData) {
-        userDAO.add(userData);
+    public void add(User user) {
+        userDAO.add(user);
     }
 
     @Override
     @Transactional
-    public void delete(UserData userData) {
-        userDAO.delete(userData);
+    public void delete(User user) {
+        userDAO.delete(user);
     }
 
     @Override
     @Transactional
-    public void edit(UserData userData) {
-        userDAO.edit(userData);
+    public void edit(User user) {
+        userDAO.edit(user);
     }
 
     @Override
     @Transactional
-    public UserData getById(int id) {
+    public User getById(int id) {
         return userDAO.getById(id);
     }
 

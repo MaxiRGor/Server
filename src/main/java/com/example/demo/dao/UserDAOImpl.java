@@ -1,8 +1,7 @@
 package com.example.demo.dao;
 
 
-import com.example.demo.model.Film;
-import com.example.demo.model.UserData;
+import com.example.demo.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,38 +22,38 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<UserData> allUsers(int page) {
+    public List<User> allUsers(int page) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from UserData ").setFirstResult((10 * (page - 1))).setMaxResults(10).list();
+        return session.createQuery("from User ").setFirstResult((10 * (page - 1))).setMaxResults(10).list();
     }
 
     @Override
-    public void add(UserData userData) {
+    public void add(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.persist(userData);
+        session.persist(user);
     }
 
     @Override
-    public void delete(UserData userData) {
+    public void delete(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.delete(userData);
+        session.delete(user);
     }
 
     @Override
-    public void edit(UserData userData) {
+    public void edit(User user) {
         Session session = sessionFactory.getCurrentSession();
-        session.update(userData);
+        session.update(user);
     }
 
     @Override
-    public UserData getById(int id) {
+    public User getById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(UserData.class, id);
+        return session.get(User.class, id);
     }
 
     @Override
     public int usersCount() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("select count(*) from UserData ", Number.class).getSingleResult().intValue();
+        return session.createQuery("select count(*) from User ", Number.class).getSingleResult().intValue();
     }
 }
