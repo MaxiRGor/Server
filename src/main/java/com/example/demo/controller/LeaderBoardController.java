@@ -67,4 +67,9 @@ public class LeaderBoardController {
         System.out.println("updated");
     }
 
+    public void renewLeaderBoard() {
+    }
+
+    public void deletePassedLeaderBoard() {
+    }
 }
