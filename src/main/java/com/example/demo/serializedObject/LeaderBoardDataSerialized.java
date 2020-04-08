@@ -1,10 +1,21 @@
 package com.example.demo.serializedObject;
 
-public class LeaderBoardDataSerialized {
+import java.io.Serializable;
 
-    private    String nickname;
-    private  int place;
-    private   int score;
+public class LeaderBoardDataSerialized implements Serializable {
+
+    private String nickname;
+    private int place;
+    private int score;
+
+    public LeaderBoardDataSerialized() {
+    }
+
+    public LeaderBoardDataSerialized(String nickname, int place, int score) {
+        this.nickname = nickname;
+        this.place = place;
+        this.score = score;
+    }
 
     public String getNickname() {
         return nickname;

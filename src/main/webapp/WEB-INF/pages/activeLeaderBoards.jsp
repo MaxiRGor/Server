@@ -48,10 +48,21 @@
     <div>The list is empty</div>
 </c:if>
 
+
+<c:url value="/leader-board/active/top" var="json"/>
+<h3>
+    <a href="${json}">Get active leaders json</a>
+</h3>
+
+<c:url value="/leader-board/active" var="json"/>
+<h3>
+    <a href="${json}">Get past leaders</a>
+</h3>
+
 <c:url value="/" var="mainPage"/>
-<h6>
+<h3>
     <a href="${mainPage}">Main Page</a>
-</h6>
+</h3>
 
 </body>
 </html>

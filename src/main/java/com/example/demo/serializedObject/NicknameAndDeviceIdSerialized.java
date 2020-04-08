@@ -1,9 +1,11 @@
 package com.example.demo.serializedObject;
 
-public class NicknameAndDeviceIdSerialized {
+import java.io.Serializable;
 
-    private   String nickname;
-    private  String deviceId;
+public class NicknameAndDeviceIdSerialized implements Serializable {
+
+    private String nickname;
+    private String deviceId;
 
     public String getNickname() {
         return nickname;

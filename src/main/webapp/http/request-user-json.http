@@ -1,0 +1,6 @@
+http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< test-user-credentials.json
+
+###

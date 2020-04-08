@@ -12,13 +12,13 @@
 </head>
 <body>
 <h3>
-    <a href="/films/">Films</a>
+    <a href="${pageContext.request.contextPath}/films/">Films</a>
 </h3>
 <h3>
-    <a href="/users/">Users</a>
+    <a href="${pageContext.request.contextPath}/users/">Users</a>
 </h3>
 <h3>
-    <a href="/leaders/">Leaders</a>
+    <a href="${pageContext.request.contextPath}/leader-board/active">Leaders</a>
 </h3>
 </body>
 </html>

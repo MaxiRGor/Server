@@ -32,6 +32,12 @@ public class ActiveLeaderBoardServiceImpl implements ActiveLeaderBoardService {
 
     @Override
     @Transactional
+    public List<ActiveLeaderBoard> getActiveLeaderBoardTop(int topCount) {
+        return activeLeaderBoardDAO.getActiveLeaderBoardTop(topCount);
+    }
+
+    @Override
+    @Transactional
     public void add(ActiveLeaderBoard activeLeaderBoard) {
         activeLeaderBoardDAO.add(activeLeaderBoard);
     }
@@ -42,11 +48,6 @@ public class ActiveLeaderBoardServiceImpl implements ActiveLeaderBoardService {
         activeLeaderBoardDAO.delete(activeLeaderBoard);
     }
 
-    @Override
-    @Transactional
-    public void saveAll(List<ActiveLeaderBoard> leaders) {
-        activeLeaderBoardDAO.saveAll(leaders);
-    }
 
     @Override
     @Transactional

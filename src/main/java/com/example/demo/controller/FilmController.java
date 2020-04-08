@@ -21,7 +21,7 @@ public class FilmController {
     }
 
 
-    @RequestMapping(value = "/films", method = RequestMethod.GET)
+    @RequestMapping(value = "/films/", method = RequestMethod.GET)
     public ModelAndView allFilms(@RequestParam(defaultValue = "1") int page){
         List<Film> films = filmService.allFilms(page);
         this.page = page;

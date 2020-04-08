@@ -3,9 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.model.ActiveLeaderBoard;
 import com.example.demo.model.PastLeaderBoard;
 import com.example.demo.model.User;
+import com.example.demo.serializedObject.CredentialsSerialized;
 import com.example.demo.serializedObject.NicknameAndDeviceIdSerialized;
 import com.example.demo.serializedObject.UserDataSerialized;
-import com.example.demo.service.ActiveLeaderBoardService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class UserController {
 
     private int page;
     private UserService userService;
-   // private ActiveLeaderBoardService activeLeaderBoardService;
+    // private ActiveLeaderBoardService activeLeaderBoardService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -51,18 +51,18 @@ public class UserController {
     @RequestMapping(value = "/get-json/{id}", method = RequestMethod.GET)
     public UserDataSerialized getUserData(@PathVariable("id") int id) {
         User user = userService.getById(id);
-
-        UserDataSerialized userDataSerialized = new UserDataSerialized(user.getId(),
-                false,
-                user.getHighScore(),
-                user.getCoinsAmount(),
-                user.getCrystalsAmount(),
-                user.getActiveLeaderBoard().getPlace(),
-                user.getPastLeaderBoard().getPlace(),
-                user.getPastLeaderBoard().isRewardTaken());
-
-        return userDataSerialized;
+        return getUserDataSerializedByUser(user);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/get-json/", method = RequestMethod.GET)
+    public UserDataSerialized getUserData(@RequestBody CredentialsSerialized credentials) {
+        User user = userService.getById(credentials.getUserId());
+        if(checkAuth(user, credentials))
+        return getUserDataSerializedByUser(user);
+        else return null;
+    }
+
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editUserPage(@PathVariable("id") int id) {
@@ -115,6 +115,21 @@ public class UserController {
         modelAndView.setViewName("redirect:/users?page=" + this.page);
         userService.delete(userService.getById(id));
         return modelAndView;
+    }
+
+    private UserDataSerialized getUserDataSerializedByUser(User user) {
+        return new UserDataSerialized(user.getId(),
+                false,
+                user.getHighScore(),
+                user.getCoinsAmount(),
+                user.getCrystalsAmount(),
+                user.getActiveLeaderBoard().getPlace(),
+                user.getPastLeaderBoard().getPlace(),
+                user.getPastLeaderBoard().isRewardTaken());
+    }
+
+    private boolean checkAuth(User user, CredentialsSerialized credentials){
+        return user.getDeviceId().equals(credentials.getDeviceId());
     }
 
 }

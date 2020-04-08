@@ -46,7 +46,7 @@
 <div>Pages: </div>
 
 <c:forEach begin="${1}" end="${pagesCount}" step="1" varStatus="i">
-    <c:url value="/films" var="url">
+    <c:url value="/films/" var="url">
         <c:param name="page" value="${i.index}"/>
     </c:url>
     <a href="${url}">${i.index}</a>

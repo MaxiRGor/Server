@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -33,6 +34,7 @@
                 <td>${user.activeLeaderBoard.id}</td>
                 <td>${user.pastLeaderBoard.id}</td>
                 <td>${user.highScore}</td>
+                <td>${user.coinsAmount}</td>
                 <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
                 <td>

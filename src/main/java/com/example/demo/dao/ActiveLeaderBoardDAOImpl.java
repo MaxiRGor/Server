@@ -35,6 +35,12 @@ public class ActiveLeaderBoardDAOImpl implements ActiveLeaderBoardDAO{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public List<ActiveLeaderBoard> getActiveLeaderBoardTop(int topCount) {
+        return getCurrentSession().createQuery("from ActiveLeaderBoard order by place asc").setMaxResults(topCount).list();
+    }
+
+    @Override
     public void add(ActiveLeaderBoard activeLeaderBoard) {
         getCurrentSession().persist(activeLeaderBoard);
     }
@@ -47,11 +53,6 @@ public class ActiveLeaderBoardDAOImpl implements ActiveLeaderBoardDAO{
     @Override
     public void edit(ActiveLeaderBoard activeLeaderBoard) {
         getCurrentSession().update(activeLeaderBoard);
-    }
-
-    @Override
-    public void saveAll(List<ActiveLeaderBoard> leaders) {
-        getCurrentSession().update(leaders);
     }
 
     @Override

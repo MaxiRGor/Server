@@ -1,0 +1,154 @@
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T090824.200.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T090752.200.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T085723.200.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+Content-Type: application/json
+< test-user-credentials.json:
+
+<> 2020-04-08T085711.400.html
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T085527.500.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+<> 2020-04-08T085514.400.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T085135.500.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+< test-user-credentials.json:
+
+<> 2020-04-08T085122.400.html
+
+###
+
+GET http://localhost:8080/users/get-json/<%20test-user-credentials.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T085043.500.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+###
+
+GET http://localhost:8080/users/get-json/
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/test-user-credentials.json
+
+<> 2020-04-08T084859.500.json
+
+###
+
+GET http://localhost:8080/users/get-json/2
+
+<> 2020-04-08T083322.200.json
+
+###
+
+GET http://localhost:8080/users/get-json/2
+
+<> 2020-04-08T082831.200.json
+
+###
+
+GET http://localhost:8080/users/
+
+<> 2020-04-08T082803.200.html
+
+###
+
+GET http://localhost:8080
+
+<> 2020-04-08T082740.200.html
+
+###
+
+GET http://localhost:3306
+
+###
+
+GET http://localhost:3306
+
+###
+
+GET http://localhost:3306
+
+###
+
+GET http://localhost:8080
+
+###
+
+GET http://sda
+
+###
+
