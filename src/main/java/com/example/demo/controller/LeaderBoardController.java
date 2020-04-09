@@ -112,6 +112,7 @@ public class LeaderBoardController extends DefaultController {
         modelAndView.addObject("activeLeaders", activeLeaders);
         modelAndView.addObject("activeLeaderBoardCount", activeLeaderBoardCount);
         modelAndView.addObject("pagesCount", pagesCount);
+        modelAndView.addObject("amountOfLeadersToShow", GameVariables.getInstance().getAmountOfLeadersToShow());
         return modelAndView;
     }
 
@@ -128,7 +129,29 @@ public class LeaderBoardController extends DefaultController {
         modelAndView.addObject("pastLeaders", pastLeaders);
         modelAndView.addObject("pastLeaderBoardCount", pastLeaderBoardCount);
         modelAndView.addObject("pagesCount", pagesCount);
+        modelAndView.addObject("amountOfLeadersToShow", GameVariables.getInstance().getAmountOfLeadersToShow());
         return modelAndView;
+    }
+
+    // by admin
+    @RequestMapping(value = "/update-active-leader-board", method = RequestMethod.POST)
+    public ModelAndView updateActiveLeaderBoardPage() {
+        updateActiveLeaderBoard();
+        return getActiveLeaderBoardPage(1);
+    }
+
+    // by admin
+    @RequestMapping(value = "/save-data-to-past-leader-board-and-clear-active-leader-board", method = RequestMethod.POST)
+    public ModelAndView saveDataToPastLeaderBoardAndClearActiveLeaderBoardPage() {
+        saveDataToPastLeaderBoardAndClearActiveLeaderBoard();
+        return getActiveLeaderBoardPage(1);
+    }
+
+    // by admin
+    @RequestMapping(value = "/clear-past-leader-board", method = RequestMethod.POST)
+    public ModelAndView clearPastLeaderBoardPage() {
+        clearPastLeaderBoard();
+        return getPastLeaderBoardPage(1);
     }
 
 
@@ -164,6 +187,7 @@ public class LeaderBoardController extends DefaultController {
         List<ActiveLeaderBoard> activeLeaders = activeLeaderBoardService.getActiveLeaderBoard();
         for (ActiveLeaderBoard activeLeader : activeLeaders) {
             activeLeader.setPlace(0);
+            activeLeader.getUser().setHighScore(0);
             activeLeaderBoardService.edit(activeLeader);
         }
 

@@ -11,20 +11,35 @@
 <html>
 <head>
     <title>Users</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
+<c:url value="/" var="mainPage"/>
+<h3>
+    <a href="${mainPage}">Main Page</a>
+</h3>
+<h1>
+    Users
+</h1>
 <c:if test="${usersCount>0}">
     <table>
         <tr>
-            <th>id</th>
-            <th>nickname</th>
-            <th>deviceId</th>
-            <th>activeLeaderBoardId</th>
-            <th>pastLeaderBoardId</th>
-            <th>highScore</th>
-            <th>coinsAmount</th>
-            <th>crystalsAmount</th>
-
+            <th>Id</th>
+            <th>Nickname</th>
+            <th>Device Id</th>
+            <th>Active Leader Board Id</th>
+            <th>Past Leader Board Id</th>
+            <th>High Score</th>
+            <th>Coins Amount</th>
+            <th>Crystals Amount</th>
+            <th>Actions</th>
         </tr>
         <c:forEach var="user" items="${users}">
             <tr>
@@ -35,18 +50,23 @@
                 <td>${user.pastLeaderBoard.id}</td>
                 <td>${user.highScore}</td>
                 <td>${user.coinsAmount}</td>
-                <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
                 <td>
-                    <a href="/users/edit/${user.id}">Edit</a>
-                    <a href="/users/delete/${user.id}">Delete</a>
-                    <a href="/users/get/${user.id}">Get json</a>
+                    <c:url value="/users/edit/${user.id}" var="edit"/>
+                    <c:url value="/users/delete/${user.id}" var="delete"/>
+                    <c:url value="/users/get/${user.id}" var="getJson"/>
+                    <form action="${getJson}" method="GET">
+                        <input type="submit" value="Get Json">
+                    </form>
+                    <form action="${edit}" method="GET">
+                        <input type="submit" value="Edit">
+                    </form>
+                    <form action="${delete}" method="GET">
+                        <input type="submit" value="Delete">
+                    </form>
                 </td>
             </tr>
-
         </c:forEach>
-
-
     </table>
 
 </c:if>
@@ -65,24 +85,25 @@
     <a href="${url}">${i.index}</a>
 </c:forEach>
 
+<br>
+<hr>
+
 <c:url value="/users/create" var="create"/>
-<h4>
-    <a href="${create}">Create new user</a>
-</h4>
+<form action="${create}" method="GET">
+    <input type="submit" value="Create new user">
+</form>
 
 <c:url value="/users/create-initials" var="createInitials"/>
-<h4>
-    <a href="${createInitials}">TEST CREATE 1000 NEW USERS</a>
-</h4>
+<form action="${createInitials}" method="GET">
+    <input type="submit" value="TEST CREATE 1000 NEW USERS">
+</form>
 
 <c:url value="/users/set-random-score" var="setScore"/>
-<h4>
-    <a href="${setScore}">TEST SET ALL USERS RANDOM SCORE</a>
-</h4>
+<form action="${setScore}" method="GET">
+    <input type="submit" value="TEST SET ALL USERS RANDOM SCORE">
+</form>
 
-<c:url value="/" var="mainPage"/>
-<h3>
-    <a href="${mainPage}">Main Page</a>
-</h3>
+
+
 </body>
 </html>

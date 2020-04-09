@@ -10,8 +10,23 @@
 <html>
 <head>
     <title>Game Variables</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
+<c:url value="/" var="mainPage"/>
+<h3>
+    <a href="${mainPage}">Main Page</a>
+</h3>
+<h1>
+    Game Variables
+</h1>
 <br>
 <div>Amount Of Items On Page = ${gameVariables.amountOfItemsOnPage}</div>
 <br>
@@ -31,9 +46,6 @@
 
     </c:forEach>
 </table>
-<c:url value="/" var="mainPage"/>
-<h3>
-    <a href="${mainPage}">Main Page</a>
-</h3>
+
 </body>
 </html>

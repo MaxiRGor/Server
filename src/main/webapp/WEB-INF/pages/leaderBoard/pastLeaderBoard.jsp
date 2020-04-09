@@ -11,14 +11,28 @@
 <html>
 <head>
     <title>Past Leader Board</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
-<br>
-<div>Past Leader Board</div>
-
+<c:url value="/" var="mainPage"/>
+<h3>
+    <a href="${mainPage}">Main Page</a>
+</h3>
 <h1>
-
+    Past Leader Board
 </h1>
+
+<c:url value="/leader-board/active" var="var"/>
+<h3>
+    <a href="${var}">Active leaders page</a>
+</h3>
 
 <c:if test="${pastLeaderBoardCount>0}">
     <table>
@@ -28,6 +42,7 @@
             <th>Nickname</th>
             <th>Saved score</th>
             <th>Is reward taken</th>
+            <th>Action</th>
         </tr>
         <c:forEach var="leader" items="${pastLeaders}">
             <tr>
@@ -36,12 +51,20 @@
                 <td>${leader.user.nickname}</td>
                 <td>${leader.savedScore}</td>
                 <td>${leader.rewardTaken}</td>
+                <td>
+                    <c:if test="${!leader.rewardTaken}">
+                        <c:url value="/users/perform-reward/${leader.id}" var="var"/>
+                        <form action="${var}" method="POST">
+                            <input type="submit" value="Reward">
+                        </form>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
     </table>
 
     <br>
-    <div>Pages: </div>
+    <div>Pages:</div>
 
     <c:forEach begin="${1}" end="${pagesCount}" step="1" varStatus="i">
         <c:url value="/leader-board/past" var="url">
@@ -57,21 +80,17 @@
     <div>The list is empty</div>
 </c:if>
 
+<hr>
 
 <c:url value="/leader-board/past/top" var="json"/>
 <h3>
-    <a href="${json}">Get past leaders json</a>
+    <a href="${json}">Get json top ${amountOfLeadersToShow}</a>
 </h3>
 
-<c:url value="/leader-board/active" var="json"/>
-<h3>
-    <a href="${json}">Get active leaders</a>
-</h3>
-
-<c:url value="/" var="mainPage"/>
-<h3>
-    <a href="${mainPage}">Main Page</a>
-</h3>
+<c:url value="/leader-board/clear-past-leader-board" var="var"/>
+<form action="${var}" method="POST">
+    <input type="submit" value="TEST Clear past leader board">
+</form>
 
 </body>
 </html>

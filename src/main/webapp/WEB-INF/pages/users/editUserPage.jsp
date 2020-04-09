@@ -9,9 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Edit User</title>
+    <title>Edit user</title>
 </head>
 <body>
+<h1>
+    Edit user
+</h1>
 <c:url value="/users/edit" var="var"/>
 <form action="${var}" method="POST">
 

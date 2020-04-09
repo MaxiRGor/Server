@@ -10,14 +10,30 @@
 <html>
 <head>
     <title>Active Leader Board</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 15px;
+        }
+    </style>
 </head>
 <body>
-<br>
-<div>Active Leader Board</div>
+
+<c:url value="/" var="mainPage"/>
+<h3>
+    <a href="${mainPage}">Main Page</a>
+</h3>
 
 <h1>
-
+    Active Leader Board
 </h1>
+
+<c:url value="/leader-board/past" var="var"/>
+<h3>
+    <a href="${var}">Past leaders page</a>
+</h3>
 
 <c:if test="${activeLeaderBoardCount>0}">
     <table>
@@ -54,21 +70,23 @@
     <div>The list is empty</div>
 </c:if>
 
+<hr>
 
-<c:url value="/leader-board/active/top" var="json"/>
+
+<c:url value="/leader-board/active/top" var="var"/>
 <h3>
-    <a href="${json}">Get active leaders json</a>
+    <a href="${var}">Get json top ${amountOfLeadersToShow}</a>
 </h3>
 
-<c:url value="/leader-board/past" var="json"/>
-<h3>
-    <a href="${json}">Get past leaders</a>
-</h3>
+<c:url value="/leader-board/update-active-leader-board" var="var"/>
+<form action="${var}" method="POST">
+    <input type="submit" value="TEST Update active leader board">
+</form>
 
-<c:url value="/" var="mainPage"/>
-<h3>
-    <a href="${mainPage}">Main Page</a>
-</h3>
+<c:url value="/leader-board/save-data-to-past-leader-board-and-clear-active-leader-board" var="var"/>
+<form action="${var}" method="POST">
+    <input type="submit" value="TEST Save data to past leader board and clear active leader board">
+</form>
 
 </body>
 </html>

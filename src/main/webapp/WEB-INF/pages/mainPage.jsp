@@ -8,9 +8,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>MainPage</title>
+    <title>Main Page</title>
 </head>
 <body>
+<h1>
+    Main Page
+</h1>
 <h3>
     <a href="${pageContext.request.contextPath}/users/">Users</a>
 </h3>

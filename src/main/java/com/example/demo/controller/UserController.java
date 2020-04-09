@@ -88,23 +88,11 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/reward/get", method = RequestMethod.GET)
-    public CurrencyAmountSerialized getRewardByClient(@RequestBody CredentialsSerialized credentials) {
+    @RequestMapping(value = "/perform-reward/", method = RequestMethod.GET)
+    public CurrencyAmountSerialized rewardUserByClient(@RequestBody CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
-            if(!user.getPastLeaderBoard().isRewardTaken()){
-                Reward reward = GameVariables.getInstance().getRewardByPlace(user.getPastLeaderBoard().getPlace());
-                switch (reward.getRewardType()){
-                    case Coins:
-                        user.setCoinsAmount(user.getCoinsAmount() + reward.getRewardAmount());
-                        break;
-                    case Crystals:
-                        user.setCrystalsAmount(user.getCrystalsAmount() + reward.getRewardAmount());
-                        break;
-                }
-                user.getPastLeaderBoard().setRewardTaken(true);
-                userService.edit(user);
-            }
+            rewardUser(user);
             return new CurrencyAmountSerialized(user.getCoinsAmount(), user.getCrystalsAmount());
         } else return null;
     }
@@ -201,6 +189,13 @@ public class UserController extends DefaultController {
         return getUsersModelAndView(this.page);
     }
 
+    //by admin
+    @ResponseBody
+    @RequestMapping(value = "/perform-reward/{id}", method = RequestMethod.POST)
+    public void rewardUserByAdmin(@PathVariable("id") int id) {
+        rewardUser(userService.getById(id));
+    }
+
     private CoinsAmountSerialized changedCoinsAmount(int value, CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
@@ -260,4 +255,21 @@ public class UserController extends DefaultController {
             user.setHighScore(score);
         userService.edit(user);
     }
+
+    private void rewardUser(User user) {
+        if (!user.getPastLeaderBoard().isRewardTaken()) {
+            Reward reward = GameVariables.getInstance().getRewardByPlace(user.getPastLeaderBoard().getPlace());
+            switch (reward.getRewardType()) {
+                case Coins:
+                    user.setCoinsAmount(user.getCoinsAmount() + reward.getRewardAmount());
+                    break;
+                case Crystals:
+                    user.setCrystalsAmount(user.getCrystalsAmount() + reward.getRewardAmount());
+                    break;
+            }
+            user.getPastLeaderBoard().setRewardTaken(true);
+            userService.edit(user);
+        }
+    }
+
 }
