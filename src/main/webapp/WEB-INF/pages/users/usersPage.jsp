@@ -103,7 +103,5 @@
     <input type="submit" value="TEST SET ALL USERS RANDOM SCORE">
 </form>
 
-
-
 </body>
 </html>

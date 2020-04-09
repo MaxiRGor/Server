@@ -13,7 +13,6 @@ import com.example.demo.util.SortByScore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -165,13 +164,24 @@ public class LeaderBoardController extends DefaultController {
         }
     }
 
-    @Caching(evict = {@CacheEvict(activeLeaderBoardCache), @CacheEvict(pastLeaderBoardCache)})
+    @CacheEvict(value = {activeLeaderBoardCache, pastLeaderBoardCache}, allEntries = true)
     public void saveDataToPastLeaderBoardAndClearActiveLeaderBoard() {
         updateActiveLeaderBoard();
         setPastLeaderBoardFromActiveLeaderBoard();
         clearActiveLeaderBoard();
     }
 
+
+    @CacheEvict(pastLeaderBoardCache)
+    public void clearPastLeaderBoard() {
+        List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
+        for (PastLeaderBoard pastLeader : pastLeaders) {
+            pastLeader.setPlace(0);
+            pastLeader.setSavedScore(0);
+            pastLeader.setRewardTaken(true);
+            pastLeaderBoardService.edit(pastLeader);
+        }
+    }
 
     private void setPastLeaderBoardFromActiveLeaderBoard() {
         List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
@@ -193,14 +203,4 @@ public class LeaderBoardController extends DefaultController {
 
     }
 
-    @CacheEvict(pastLeaderBoardCache)
-    public void clearPastLeaderBoard() {
-        List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
-        for (PastLeaderBoard pastLeader : pastLeaders) {
-            pastLeader.setPlace(0);
-            pastLeader.setSavedScore(0);
-            pastLeader.setRewardTaken(true);
-            pastLeaderBoardService.edit(pastLeader);
-        }
-    }
 }
