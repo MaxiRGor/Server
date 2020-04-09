@@ -6,13 +6,13 @@
   Time: 18:31
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Add user</title>
 </head>
 <body>
-<c:url value="/users/add" var="var"/>
+<c:url value="/users/create" var="var"/>
 <form action="${var}" method="POST">
 
     <label for="nickname">Nickname</label>

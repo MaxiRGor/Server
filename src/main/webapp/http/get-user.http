@@ -1,0 +1,5 @@
+http://localhost:8080/users/get/
+Content-Type: application/json
+
+< credentials.json
+###

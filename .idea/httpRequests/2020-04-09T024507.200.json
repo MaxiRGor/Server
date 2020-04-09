@@ -1,0 +1,52 @@
+[
+  {
+    "nickname": "John Doe",
+    "place": 0,
+    "score": 0,
+    "reward": {
+      "rewardType": "Coins",
+      "rewardAmount": 100
+    },
+    "rewardTaken": false
+  },
+  {
+    "nickname": "John Doe 2",
+    "place": 0,
+    "score": 0,
+    "reward": {
+      "rewardType": "Coins",
+      "rewardAmount": 100
+    },
+    "rewardTaken": false
+  },
+  {
+    "nickname": "Max",
+    "place": 0,
+    "score": 0,
+    "reward": {
+      "rewardType": "Coins",
+      "rewardAmount": 100
+    },
+    "rewardTaken": false
+  },
+  {
+    "nickname": "Alex",
+    "place": 0,
+    "score": 0,
+    "reward": {
+      "rewardType": "Coins",
+      "rewardAmount": 100
+    },
+    "rewardTaken": false
+  },
+  {
+    "nickname": "Dfada",
+    "place": 0,
+    "score": 0,
+    "reward": {
+      "rewardType": "Coins",
+      "rewardAmount": 100
+    },
+    "rewardTaken": false
+  }
+]

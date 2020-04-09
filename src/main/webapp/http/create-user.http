@@ -1,0 +1,5 @@
+http://localhost:8080/users/create/
+Content-Type: application/json
+
+< nickname-and-device-id.json
+###

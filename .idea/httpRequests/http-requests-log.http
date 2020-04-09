@@ -1,3 +1,187 @@
+GET http://localhost:8080/leader-board/past/top
+Content-Type: application/json
+
+###
+
+GET http://localhost:8080/leader-board/past/top
+Content-Type: application/json
+
+<> 2020-04-09T024507.200.json
+
+###
+
+GET http://localhost:8080/leader-board/active/top
+Content-Type: application/json
+
+<> 2020-04-09T024456.200.json
+
+###
+
+GET http://localhost:8080/leaderboard/active/top
+Content-Type: application/json
+
+<> 2020-04-09T024447.404.json
+
+###
+
+GET http://localhost:8080/users/create/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/nickname-and-device-id.json
+
+<> 2020-04-09T023934.200.json
+
+###
+
+GET http://localhost:8080/users/get/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023845.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/17
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023745.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/150
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023737.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/99
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023731.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/100
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023726.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/1
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023702.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/1
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+###
+
+GET http://localhost:8080/users/add-score/1
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023622.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/150
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023605.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/150
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023556.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/200
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023548.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/35
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023539.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/20
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023510.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/100
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-09T023500.200.json
+
+###
+
+GET http://localhost:8080/users/add-score/{score}
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+###
+
+GET http://localhost:8080/users/get/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+<> 2020-04-08T113548.200.json
+
+###
+
+GET http://localhost:8080/users/add/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/nickname-and-device-id.json
+
+<> 2020-04-08T113504.200.json
+
+###
+
 GET http://localhost:8080/users/get-json/
 Content-Type: application/json
 

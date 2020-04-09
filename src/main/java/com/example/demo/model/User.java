@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
+import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -88,7 +90,6 @@ public class User {
     public void setHighScore(int highScore) {
         this.highScore = highScore;
     }
-
 
     public void setCoinsAmount(int coinsAmount) {
         this.coinsAmount = coinsAmount;

@@ -1,73 +1,84 @@
 package com.example.demo;
 
+import com.example.demo.util.Reward;
+import com.example.demo.util.RewardType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameVariables {
 
-    public static int a = 1000;
+    public static final int TIMEOUT_TO_UPDATE_LEADER_BOARD = 60 * 1000;
+    public static final long TIMEOUT_TO_RENEW_LEADER_BOARD = 7 * 24 * 60 * 60 * 1000;
+    public static final long TIMEOUT_TO_CLEAR_PAST_LEADER_BOARD = 3 * 24 * 60 * 60 * 1000;
+
+    private List<Reward> rewardsForFirstPlaces;
+
+    private int amountOfItemsOnPage;
+    private int amountOfLeadersToShow;
+    //private int amountOfLeadersToKeepInLeaderBoard;
 
     private static GameVariables ourInstance = new GameVariables();
-
     public static GameVariables getInstance() {
         return ourInstance;
     }
 
     private GameVariables() {
-        this.timeToUpdateLeaderboard = getMillisecondsFromMinutes(15);
-        this.timeToRenewLeaderboard = getMillisecondsFromDays(7);
-        this.timeToDeletePastLeaderboard = getMillisecondsFromDays(3);
-        this.rewardsForFirstPlaces = new ArrayList<Integer>();
-        this.    rewardsForFirstPlaces.add(1000);
-        this.      rewardsForFirstPlaces.add(500);
-        this.      rewardsForFirstPlaces.add(250);
+        this.rewardsForFirstPlaces = new ArrayList<>();
+        setRewardsForFirstPlaces();
+        this.amountOfItemsOnPage = 2;
+        this.amountOfLeadersToShow = 100;
+        //this.amountOfLeadersToKeepInLeaderBoard = 1000;
     }
 
-    private long timeToUpdateLeaderboard;
 
-    private long timeToRenewLeaderboard;
-
-    private long timeToDeletePastLeaderboard;
-
-    private List<Integer> rewardsForFirstPlaces;
-
-    public long getTimeToUpdateLeaderboard() {
-        return timeToUpdateLeaderboard;
-    }
-
-    public void setTimeToUpdateLeaderboard(long timeToUpdateLeaderboard) {
-        this.timeToUpdateLeaderboard = timeToUpdateLeaderboard;
-    }
-
-    public long getTimeToRenewLeaderboard() {
-        return timeToRenewLeaderboard;
-    }
-
-    public void setTimeToRenewLeaderboard(long timeToRenewLeaderboard) {
-        this.timeToRenewLeaderboard = timeToRenewLeaderboard;
-    }
-
-    public long getTimeToDeletePastLeaderboard() {
-        return timeToDeletePastLeaderboard;
-    }
-
-    public void setTimeToDeletePastLeaderboard(long timeToDeletePastLeaderboard) {
-        this.timeToDeletePastLeaderboard = timeToDeletePastLeaderboard;
-    }
-
-    public List<Integer> getRewardsForFirstPlaces() {
+    public List<Reward> getRewardsForFirstPlaces() {
         return rewardsForFirstPlaces;
     }
 
-    public void setRewardsForFirstPlaces(List<Integer> rewardsForFirstPlaces) {
-        this.rewardsForFirstPlaces = rewardsForFirstPlaces;
+    private void setRewardsForFirstPlaces() {
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,1000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,750));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,500));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,250));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,100));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,75));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,50));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,25));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,10));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,5));
+
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,10000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,8000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,7500));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,6500));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,5000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,4000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,3000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,2000));
+        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,1500));
     }
 
-    private long getMillisecondsFromDays(int daysAmount){
-        return daysAmount * 24 * 60 * 60 * 1000;
+    public Reward getRewardByPlace(int place){
+        if(place>0 && place<rewardsForFirstPlaces.size())
+            return rewardsForFirstPlaces.get(place-1);
+        else return new Reward(RewardType.Coins, 100);
     }
 
-    private long getMillisecondsFromMinutes(int minutesAmount){
-        return minutesAmount * 60 * 1000;
+
+    public int getAmountOfItemsOnPage() {
+        return amountOfItemsOnPage;
     }
+
+    public int getAmountOfLeadersToShow() {
+        return amountOfLeadersToShow;
+    }
+
+   /* public int getAmountOfLeadersToKeepInLeaderBoard() {
+        return amountOfLeadersToKeepInLeaderBoard;
+    }
+
+    public void setAmountOfLeadersToKeepInLeaderBoard(int amountOfLeadersToKeepInLeaderBoard) {
+        this.amountOfLeadersToKeepInLeaderBoard = amountOfLeadersToKeepInLeaderBoard;
+    }*/
 }

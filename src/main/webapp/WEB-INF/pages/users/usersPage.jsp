@@ -38,9 +38,9 @@
                 <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
                 <td>
-                    <a href="/users/get-json/${user.id}">getJson</a>
                     <a href="/users/edit/${user.id}">edit</a>
                     <a href="/users/delete/${user.id}">delete</a>
+                    <a href="/users/get-json/${user.id}">getJson</a>
                 </td>
             </tr>
 
@@ -65,9 +65,9 @@
     <a href="${url}">${i.index}</a>
 </c:forEach>
 
-<c:url value="/users/add" var="add"/>
+<c:url value="/users/create" var="create"/>
 <h4>
-    <a href="${add}">Add new user</a>
+    <a href="${create}">Create new user</a>
 </h4>
 
 <c:url value="/" var="mainPage"/>

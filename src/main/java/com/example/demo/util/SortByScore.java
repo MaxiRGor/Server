@@ -1,6 +1,6 @@
 package com.example.demo.util;
 
-import com.example.demo.model.ActiveLeaderBoard;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 
 import java.util.Comparator;
 

@@ -1,6 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.leaderBoard.active;
 
-import com.example.demo.model.ActiveLeaderBoard;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 
 import java.util.List;
 

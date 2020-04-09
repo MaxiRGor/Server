@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.demo.service.leaderBoard.active;
 
-import com.example.demo.dao.ActiveLeaderBoardDAO;
-import com.example.demo.model.ActiveLeaderBoard;
+import com.example.demo.dao.leaderBoard.active.ActiveLeaderBoardDAO;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

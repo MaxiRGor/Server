@@ -1,6 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.user;
 
-import com.example.demo.dao.UserDAO;
+import com.example.demo.dao.user.UserDAO;
 import com.example.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,14 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public List<User> allUsers(int page) {
-        return userDAO.allUsers(page);
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
+
+    @Override
+    @Transactional
+    public List<User> getUsersAtPage(int page) {
+        return userDAO.getUsersAtPage(page);
     }
 
     @Override

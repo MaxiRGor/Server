@@ -1,5 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.model.leaderBoard;
 
+import com.example.demo.model.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -8,12 +9,11 @@ import javax.persistence.*;
 @Table(name = "past_leader_board")
 public class PastLeaderBoard {
 
-
     private int id;
     private User user;
     private int place;
-    private int rewardCrystalsAmount;
-    private boolean isRewardTaken;
+    private int savedScore;
+    private boolean rewardTaken;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -28,21 +28,21 @@ public class PastLeaderBoard {
         return user;
     }
 
-    @Column(name = "place", columnDefinition = "integer default -1")
+    //todo nullable
+    @Column(name = "place", columnDefinition = "integer default 0")
     public int getPlace() {
         return place;
     }
 
-    @Column(name = "reward_crystals_amount", columnDefinition = "integer default 100")
-    public int getRewardCrystalsAmount() {
-        return rewardCrystalsAmount;
+    @Column(name = "saved_score", columnDefinition = "integer default 0")
+    public int getSavedScore() {
+        return savedScore;
     }
 
-    @Column(name = "is_reward_taken", columnDefinition = "boolean default false")
+    @Column(name = "reward_taken", columnDefinition = "boolean default true")
     public boolean isRewardTaken() {
-        return isRewardTaken;
+        return rewardTaken;
     }
-
 
     public void setId(int id) {
         this.id = id;
@@ -56,12 +56,11 @@ public class PastLeaderBoard {
         this.place = place;
     }
 
-    public void setRewardCrystalsAmount(int rewardCrystalsAmount) {
-        this.rewardCrystalsAmount = rewardCrystalsAmount;
-    }
-
     public void setRewardTaken(boolean rewardTaken) {
-        isRewardTaken = rewardTaken;
+        this.rewardTaken = rewardTaken;
     }
 
+    public void setSavedScore(int savedScore) {
+        this.savedScore = savedScore;
+    }
 }

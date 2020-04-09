@@ -1,6 +1,6 @@
-package com.example.demo.dao;
+package com.example.demo.dao.leaderBoard.active;
 
-import com.example.demo.model.ActiveLeaderBoard;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 
 import java.util.List;
 

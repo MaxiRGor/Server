@@ -1,11 +1,12 @@
-package com.example.demo.service;
+package com.example.demo.service.user;
 
 import com.example.demo.model.User;
 
 import java.util.List;
 
 public interface UserService {
-    List<User> allUsers(int page);
+    List<User> getAllUsers();
+    List<User> getUsersAtPage(int page);
     void add(User user);
     void delete(User user);
     void edit(User user);

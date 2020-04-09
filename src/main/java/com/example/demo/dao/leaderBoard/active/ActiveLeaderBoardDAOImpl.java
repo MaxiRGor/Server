@@ -1,6 +1,7 @@
-package com.example.demo.dao;
+package com.example.demo.dao.leaderBoard.active;
 
-import com.example.demo.model.ActiveLeaderBoard;
+import com.example.demo.GameVariables;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ActiveLeaderBoardDAOImpl implements ActiveLeaderBoardDAO{
     @Override
     @SuppressWarnings("unchecked")
     public List<ActiveLeaderBoard> getActiveLeaderBoardAtPage(int page) {
-        return getCurrentSession().createQuery("from ActiveLeaderBoard").setFirstResult((10 * (page - 1))).setMaxResults(10).list();
+        return getCurrentSession().createQuery("from ActiveLeaderBoard").setFirstResult((GameVariables.getInstance().getAmountOfItemsOnPage() * (page - 1))).setMaxResults(GameVariables.getInstance().getAmountOfItemsOnPage()).list();
     }
 
     @Override

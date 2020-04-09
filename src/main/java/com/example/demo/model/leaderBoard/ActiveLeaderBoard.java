@@ -1,5 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.model.leaderBoard;
 
+import com.example.demo.model.User;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -9,7 +10,6 @@ import javax.persistence.*;
 public class ActiveLeaderBoard {
 
     private int id;
-    //   private int userId;
     private User user;
     private int place;
 
@@ -27,7 +27,8 @@ public class ActiveLeaderBoard {
         return user;
     }
 
-    @Column(name = "place", columnDefinition = "integer default -1")
+    //todo nullable
+    @Column(name = "place", columnDefinition = "integer default 0")
     public int getPlace() {
         return place;
     }

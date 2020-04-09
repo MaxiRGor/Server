@@ -2,16 +2,16 @@ package com.example.demo.serializedObject;
 
 import java.io.Serializable;
 
-public class LeaderBoardDataSerialized implements Serializable {
+public class ActiveLeaderBoardDataSerialized implements Serializable {
 
     private String nickname;
     private int place;
     private int score;
 
-    public LeaderBoardDataSerialized() {
+    public ActiveLeaderBoardDataSerialized() {
     }
 
-    public LeaderBoardDataSerialized(String nickname, int place, int score) {
+    public ActiveLeaderBoardDataSerialized(String nickname, int place, int score) {
         this.nickname = nickname;
         this.place = place;
         this.score = score;

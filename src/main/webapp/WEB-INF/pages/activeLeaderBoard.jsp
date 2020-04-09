@@ -6,12 +6,18 @@
   Time: 12:27
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Active Leader Board</title>
 </head>
 <body>
+<br>
+<div>Active Leader Board</div>
+
+<h1>
+
+</h1>
 
 <c:if test="${activeLeaderBoardCount>0}">
     <table>
@@ -21,7 +27,7 @@
             <th>userName</th>
             <th>highScore</th>
         </tr>
-        <c:forEach var="leader" items="${leaders}">
+        <c:forEach var="leader" items="${activeLeaders}">
             <tr>
                 <td>${leader.id}</td>
                 <td>${leader.place}</td>
@@ -54,7 +60,7 @@
     <a href="${json}">Get active leaders json</a>
 </h3>
 
-<c:url value="/leader-board/active" var="json"/>
+<c:url value="/leader-board/past" var="json"/>
 <h3>
     <a href="${json}">Get past leaders</a>
 </h3>

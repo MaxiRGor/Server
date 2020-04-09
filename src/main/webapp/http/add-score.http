@@ -1,0 +1,5 @@
+http://localhost:8080/users/add-score/17
+Content-Type: application/json
+
+< credentials.json
+###

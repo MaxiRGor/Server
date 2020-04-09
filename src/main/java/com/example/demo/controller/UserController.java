@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ActiveLeaderBoard;
-import com.example.demo.model.PastLeaderBoard;
+import com.example.demo.GameVariables;
+import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
+import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import com.example.demo.model.User;
 import com.example.demo.serializedObject.CredentialsSerialized;
+import com.example.demo.serializedObject.HighScoreSerialized;
 import com.example.demo.serializedObject.NicknameAndDeviceIdSerialized;
 import com.example.demo.serializedObject.UserDataSerialized;
-import com.example.demo.service.UserService;
+import com.example.demo.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +18,57 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/users")
-public class UserController {
+public class UserController extends DefaultController{
 
     private int page;
     private UserService userService;
-    // private ActiveLeaderBoardService activeLeaderBoardService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-/*    @Autowired
-    public void setActiveLeaderBoardService(ActiveLeaderBoardService activeLeaderBoardService){
-        this.activeLeaderBoardService = activeLeaderBoardService;
-    }*/
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/create/", method = RequestMethod.GET)
+    public UserDataSerialized createUserByClient(@RequestBody NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
+        if(isNicknameNormal())
+            return getUserDataSerializedByUser(createUser(nicknameAndDeviceIdSerialized));
+        else return null;
+    }
 
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/get/", method = RequestMethod.GET)
+    public UserDataSerialized getUserDataByClient(@RequestBody CredentialsSerialized credentials) {
+        User user = userService.getById(credentials.getUserId());
+        if(checkAuthSuccess(user, credentials))
+            return getUserDataSerializedByUser(user);
+        else return null;
+    }
+
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/add-score/{score}", method = RequestMethod.GET)
+    public HighScoreSerialized addScoreByClient(@PathVariable("score") int score, @RequestBody CredentialsSerialized credentials) {
+        User user = userService.getById(credentials.getUserId());
+        if(checkAuthSuccess(user, credentials)){
+            setHighScore(score, user);
+            return new HighScoreSerialized(user.getHighScore());
+        }
+        else return null;
+    }
+
+
+    //in server
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView allUsers(@RequestParam(defaultValue = "1") int page) {
-        List<User> users = userService.allUsers(page);
+    public ModelAndView getPageWithUsers(@RequestParam(defaultValue = "1") int page) {
+        List<User> users = userService.getUsersAtPage(page);
         this.page = page;
         int usersCount = userService.usersCount();
-        int pagesCount = (usersCount + 9) / 10;
+        int pagesCount = getPage(usersCount);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("users");
+        modelAndView.setViewName("users/usersPage");
         modelAndView.addObject("page", page);
         modelAndView.addObject("users", users);
         modelAndView.addObject("usersCount", usersCount);
@@ -47,33 +76,26 @@ public class UserController {
         return modelAndView;
     }
 
+    //in server
     @ResponseBody
-    @RequestMapping(value = "/get-json/{id}", method = RequestMethod.GET)
-    public UserDataSerialized getUserData(@PathVariable("id") int id) {
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    public UserDataSerialized getPageWithUserData(@PathVariable("id") int id) {
         User user = userService.getById(id);
         return getUserDataSerializedByUser(user);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/get-json/", method = RequestMethod.GET)
-    public UserDataSerialized getUserData(@RequestBody CredentialsSerialized credentials) {
-        User user = userService.getById(credentials.getUserId());
-        if(checkAuth(user, credentials))
-        return getUserDataSerializedByUser(user);
-        else return null;
-    }
-
-
+    //in server
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editUserPage(@PathVariable("id") int id) {
+    public ModelAndView getPageToEditUser(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("editUserPage");
+        modelAndView.setViewName("users/editUserPage");
         modelAndView.addObject("user", userService.getById(id));
         return modelAndView;
     }
 
+    //in server
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editUser(@ModelAttribute("user") User changedUser) {
+    public ModelAndView getPageAfterEditingUser(@ModelAttribute("user") User changedUser) {
         User user = userService.getById(changedUser.getId());
         user.setNickname(changedUser.getNickname());
         user.setHighScore(changedUser.getHighScore());
@@ -85,36 +107,36 @@ public class UserController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.GET)
-    public ModelAndView addUserPage() {
+    //in server
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView getPageToAddUser() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("addUserPage");
+        modelAndView.setViewName("users/createUserPage");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addUser(@ModelAttribute("newUser") NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
+    //in server
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView getPageAfterAddingUser(@ModelAttribute("nicknameAndDeviceId") NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
+        createUser(nicknameAndDeviceIdSerialized);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/users?page=" + this.page);
-        User user = new User();
-        ActiveLeaderBoard activeLeaderBoard = new ActiveLeaderBoard();
-        PastLeaderBoard pastLeaderBoard = new PastLeaderBoard();
-        user.setNickname(nicknameAndDeviceIdSerialized.getNickname());
-        user.setDeviceId(nicknameAndDeviceIdSerialized.getDeviceId());
-        user.setActiveLeaderBoard(activeLeaderBoard);
-        user.setPastLeaderBoard(pastLeaderBoard);
-        activeLeaderBoard.setUser(user);
-        pastLeaderBoard.setUser(user);
-        userService.add(user);
         return modelAndView;
     }
 
+
+    //in server
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteUser(@PathVariable("id") int id) {
+    public ModelAndView getPageAfterDeletingUser(@PathVariable("id") int id) {
+        userService.delete(userService.getById(id));
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/users?page=" + this.page);
-        userService.delete(userService.getById(id));
         return modelAndView;
+    }
+
+    private boolean isNicknameNormal() {
+        //todo
+        return true;
     }
 
     private UserDataSerialized getUserDataSerializedByUser(User user) {
@@ -128,8 +150,28 @@ public class UserController {
                 user.getPastLeaderBoard().isRewardTaken());
     }
 
-    private boolean checkAuth(User user, CredentialsSerialized credentials){
+    private boolean checkAuthSuccess(User user, CredentialsSerialized credentials){
         return user.getDeviceId().equals(credentials.getDeviceId());
     }
 
+    private User createUser(NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
+        User user = new User();
+        ActiveLeaderBoard activeLeaderBoard = new ActiveLeaderBoard();
+        PastLeaderBoard pastLeaderBoard = new PastLeaderBoard();
+        user.setNickname(nicknameAndDeviceIdSerialized.getNickname());
+        user.setDeviceId(nicknameAndDeviceIdSerialized.getDeviceId());
+        user.setActiveLeaderBoard(activeLeaderBoard);
+        user.setPastLeaderBoard(pastLeaderBoard);
+        activeLeaderBoard.setUser(user);
+        //activeLeaderBoard.setPlace(GameVariables.getInstance().getAmountOfLeadersToKeepInLeaderBoard() + 1);
+        pastLeaderBoard.setUser(user);
+        userService.add(user);
+        return user;
+    }
+
+    private void setHighScore(int score, User user) {
+        if(user.getHighScore()<score)
+            user.setHighScore(score);
+        userService.edit(user);
+    }
 }
