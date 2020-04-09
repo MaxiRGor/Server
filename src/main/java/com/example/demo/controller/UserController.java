@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.GameVariables;
 import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import com.example.demo.model.User;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/users")
@@ -66,7 +66,7 @@ public class UserController extends DefaultController{
         List<User> users = userService.getUsersAtPage(page);
         this.page = page;
         int usersCount = userService.usersCount();
-        int pagesCount = getPage(usersCount);
+        int pagesCount = getPageNumber(usersCount);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users/usersPage");
         modelAndView.addObject("page", page);
@@ -101,10 +101,8 @@ public class UserController extends DefaultController{
         user.setHighScore(changedUser.getHighScore());
         user.setCoinsAmount(changedUser.getCoinsAmount());
         user.setCrystalsAmount(changedUser.getCrystalsAmount());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/users?page=" + this.page);
         userService.edit(user);
-        return modelAndView;
+        return getUsersModelAndView(this.page);
     }
 
     //in server
@@ -119,9 +117,7 @@ public class UserController extends DefaultController{
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView getPageAfterAddingUser(@ModelAttribute("nicknameAndDeviceId") NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
         createUser(nicknameAndDeviceIdSerialized);
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/users?page=" + this.page);
-        return modelAndView;
+        return getUsersModelAndView(this.page);
     }
 
 
@@ -129,10 +125,21 @@ public class UserController extends DefaultController{
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
     public ModelAndView getPageAfterDeletingUser(@PathVariable("id") int id) {
         userService.delete(userService.getById(id));
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/users?page=" + this.page);
-        return modelAndView;
+        return getUsersModelAndView(this.page);
     }
+
+    //in server
+    @ResponseBody
+    @RequestMapping(value = "/set-random-score", method = RequestMethod.GET)
+    public ModelAndView TEST_GET_PAGE_AFTER_SETTING_RANDOM_SCORE() {
+        List<User> users = userService.getAllUsers();
+        for(User user : users){
+            user.setHighScore((int)(Math.random() * (1000)));
+            userService.edit(user);
+        }
+        return getUsersModelAndView(this.page);
+    }
+
 
     private boolean isNicknameNormal() {
         //todo

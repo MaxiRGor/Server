@@ -101,7 +101,7 @@ public class LeaderBoardController extends DefaultController {
         List<ActiveLeaderBoard> activeLeaders = activeLeaderBoardService.getActiveLeaderBoardAtPage(page);
         this.activeLeaderBoardPage = page;
         int activeLeaderBoardCount = activeLeaderBoardService.activeLeaderBoardCount();
-        int pagesCount = getPage(activeLeaderBoardCount);
+        int pagesCount = getPageNumber(activeLeaderBoardCount);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("activeLeaderBoard");
         modelAndView.addObject("page", page);
@@ -118,7 +118,7 @@ public class LeaderBoardController extends DefaultController {
         List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoardAtPage(page);
         this.pastLeaderBoardPage = page;
         int pastLeaderBoardCount = pastLeaderBoardService.pastLeaderBoardCount();
-        int pagesCount = getPage(pastLeaderBoardCount);
+        int pagesCount = getPageNumber(pastLeaderBoardCount);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("pastLeaderBoard");
         modelAndView.addObject("page", page);
@@ -146,17 +146,39 @@ public class LeaderBoardController extends DefaultController {
 
     public void saveDataToPastLeaderBoardAndClearActiveLeaderBoard() {
         updateActiveLeaderBoard();
+        setPastLeaderBoardFromActiveLeaderBoard();
+        clearActiveLeaderBoard();
+    }
+
+
+
+    private void setPastLeaderBoardFromActiveLeaderBoard() {
         List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
         for (PastLeaderBoard pastLeader : pastLeaders) {
             pastLeader.setPlace(pastLeader.getUser().getActiveLeaderBoard().getPlace());
             pastLeader.setSavedScore(pastLeader.getUser().getHighScore());
             pastLeader.setRewardTaken(false);
+            pastLeaderBoardService.edit(pastLeader);
         }
+    }
 
+    private void clearActiveLeaderBoard() {
+        List<ActiveLeaderBoard> activeLeaders = activeLeaderBoardService.getActiveLeaderBoard();
+        for (ActiveLeaderBoard activeLeader : activeLeaders) {
+            activeLeader.setPlace(0);
+            activeLeaderBoardService.edit(activeLeader);
+        }
 
     }
 
     public void clearPastLeaderBoard() {
+        List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
+        for (PastLeaderBoard pastLeader : pastLeaders) {
+            pastLeader.setPlace(0);
+            pastLeader.setSavedScore(0);
+            pastLeader.setRewardTaken(true);
+            pastLeaderBoardService.edit(pastLeader);
+        }
 
     }
 }

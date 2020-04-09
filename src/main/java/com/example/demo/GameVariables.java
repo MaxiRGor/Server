@@ -26,7 +26,7 @@ public class GameVariables {
     private GameVariables() {
         this.rewardsForFirstPlaces = new ArrayList<>();
         setRewardsForFirstPlaces();
-        this.amountOfItemsOnPage = 2;
+        this.amountOfItemsOnPage = 25;
         this.amountOfLeadersToShow = 100;
         //this.amountOfLeadersToKeepInLeaderBoard = 1000;
     }

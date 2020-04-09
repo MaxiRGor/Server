@@ -1,10 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.GameVariables;
-import com.example.demo.util.Attribute;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 public class DefaultController {
 
@@ -18,7 +15,16 @@ public class DefaultController {
        return modelAndView;
     }*/
 
-    public int getPage(int itemsCount){
+
+
+
+    int getPageNumber(int itemsCount){
         return (itemsCount + GameVariables.getInstance().getAmountOfItemsOnPage() - 1) / GameVariables.getInstance().getAmountOfItemsOnPage();
+    }
+
+    ModelAndView getUsersModelAndView(int page) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/users?page=" + page);
+        return modelAndView;
     }
 }
