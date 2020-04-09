@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.GameVariables;
 import com.example.demo.model.User;
 import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import com.example.demo.serializedObject.*;
 import com.example.demo.service.user.UserService;
+import com.example.demo.util.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,7 +47,7 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/add-score/{score-amount}", method = RequestMethod.GET)
+    @RequestMapping(value = "/score/add/{score-amount}", method = RequestMethod.GET)
     public HighScoreSerialized addScoreByClient(@PathVariable("score-amount") int scoreAmount, @RequestBody CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
@@ -82,6 +84,29 @@ public class UserController extends DefaultController {
     public CrystalsAmountSerialized subtractCrystalsByClient(@PathVariable("crystals-amount") int crystalsAmount, @RequestBody CredentialsSerialized credentials) {
         crystalsAmount *= -1;
         return changedCrystalsAmount(crystalsAmount, credentials);
+    }
+
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/reward/get", method = RequestMethod.GET)
+    public CurrencyAmountSerialized getRewardByClient(@RequestBody CredentialsSerialized credentials) {
+        User user = userService.getById(credentials.getUserId());
+        if (checkAuthSuccess(user, credentials)) {
+            if(!user.getPastLeaderBoard().isRewardTaken()){
+                Reward reward = GameVariables.getInstance().getRewardByPlace(user.getPastLeaderBoard().getPlace());
+                switch (reward.getRewardType()){
+                    case Coins:
+                        user.setCoinsAmount(user.getCoinsAmount() + reward.getRewardAmount());
+                        break;
+                    case Crystals:
+                        user.setCrystalsAmount(user.getCrystalsAmount() + reward.getRewardAmount());
+                        break;
+                }
+                user.getPastLeaderBoard().setRewardTaken(true);
+                userService.edit(user);
+            }
+            return new CurrencyAmountSerialized(user.getCoinsAmount(), user.getCrystalsAmount());
+        } else return null;
     }
 
 

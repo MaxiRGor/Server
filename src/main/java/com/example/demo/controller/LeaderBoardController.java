@@ -11,6 +11,9 @@ import com.example.demo.service.leaderBoard.past.PastLeaderBoardService;
 import com.example.demo.service.user.UserService;
 import com.example.demo.util.SortByScore;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,6 +25,8 @@ import java.util.List;
 @RequestMapping("/leader-board")
 public class LeaderBoardController extends DefaultController {
 
+    private final String activeLeaderBoardCache = "active-leader-board-cache";
+    private final String pastLeaderBoardCache = "past-leader-board-cache";
     private ActiveLeaderBoardService activeLeaderBoardService;
     private PastLeaderBoardService pastLeaderBoardService;
     private UserService userService;
@@ -42,6 +47,7 @@ public class LeaderBoardController extends DefaultController {
     }
 
     //by client
+    @Cacheable(activeLeaderBoardCache)
     @ResponseBody
     @RequestMapping(value = "/active/top", method = RequestMethod.GET)
     public List<ActiveLeaderBoardDataSerialized> getActiveLeaderBoardTop() {
@@ -54,6 +60,7 @@ public class LeaderBoardController extends DefaultController {
     }
 
     //by client
+    @Cacheable(pastLeaderBoardCache)
     @ResponseBody
     @RequestMapping(value = "/past/top", method = RequestMethod.GET)
     public List<PastLeaderBoardDataSerialized> getPastLeaderBoardTop() {
@@ -125,27 +132,22 @@ public class LeaderBoardController extends DefaultController {
     }
 
 
+    @CacheEvict(activeLeaderBoardCache)
     public void updateActiveLeaderBoard() {
-        System.out.println("updatingLeaderBoard");
         List<ActiveLeaderBoard> leaders = activeLeaderBoardService.getActiveLeaderBoard();
-        /*
-        if (leaders.size() < GameVariables.getInstance().getAmountOfLeadersToKeepInLeaderBoard()) {
-                    GameVariables.getInstance().setAmountOfLeadersToKeepInLeaderBoard(leaders.size());
-                }*/
         leaders.sort(new SortByScore());
         for (int i = 0; i < leaders.size(); i++) {
             leaders.get(i).setPlace(i + 1);
             activeLeaderBoardService.edit(leaders.get(i));
         }
-        System.out.println("updated");
     }
 
+    @Caching(evict = {@CacheEvict(activeLeaderBoardCache), @CacheEvict(pastLeaderBoardCache)})
     public void saveDataToPastLeaderBoardAndClearActiveLeaderBoard() {
         updateActiveLeaderBoard();
         setPastLeaderBoardFromActiveLeaderBoard();
         clearActiveLeaderBoard();
     }
-
 
 
     private void setPastLeaderBoardFromActiveLeaderBoard() {
@@ -167,6 +169,7 @@ public class LeaderBoardController extends DefaultController {
 
     }
 
+    @CacheEvict(pastLeaderBoardCache)
     public void clearPastLeaderBoard() {
         List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoard();
         for (PastLeaderBoard pastLeader : pastLeaders) {
@@ -175,6 +178,5 @@ public class LeaderBoardController extends DefaultController {
             pastLeader.setRewardTaken(true);
             pastLeaderBoardService.edit(pastLeader);
         }
-
     }
 }
