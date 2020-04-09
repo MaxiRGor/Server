@@ -22,8 +22,6 @@ import java.util.List;
 @RequestMapping("/leader-board")
 public class LeaderBoardController extends DefaultController {
 
-    private int activeLeaderBoardPage;
-    private int pastLeaderBoardPage;
     private ActiveLeaderBoardService activeLeaderBoardService;
     private PastLeaderBoardService pastLeaderBoardService;
     private UserService userService;
@@ -95,15 +93,14 @@ public class LeaderBoardController extends DefaultController {
         );
     }
 
-    // by server
+    // by admin
     @RequestMapping(value = "/active", method = RequestMethod.GET)
     public ModelAndView getActiveLeaderBoardPage(@RequestParam(defaultValue = "1") int page) {
-        List<ActiveLeaderBoard> activeLeaders = activeLeaderBoardService.getActiveLeaderBoardAtPage(page);
-        this.activeLeaderBoardPage = page;
+        List<ActiveLeaderBoard> activeLeaders = activeLeaderBoardService.getActiveLeaderBoardSortedByPlaceAtPage(page);
         int activeLeaderBoardCount = activeLeaderBoardService.activeLeaderBoardCount();
         int pagesCount = getPageNumber(activeLeaderBoardCount);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("activeLeaderBoard");
+        modelAndView.setViewName("leaderBoard/activeLeaderBoard");
         modelAndView.addObject("page", page);
         modelAndView.addObject("activeLeaders", activeLeaders);
         modelAndView.addObject("activeLeaderBoardCount", activeLeaderBoardCount);
@@ -112,15 +109,14 @@ public class LeaderBoardController extends DefaultController {
     }
 
 
-    // by server
+    // by admin
     @RequestMapping(value = "/past", method = RequestMethod.GET)
     public ModelAndView getPastLeaderBoardPage(@RequestParam(defaultValue = "1") int page) {
-        List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoardAtPage(page);
-        this.pastLeaderBoardPage = page;
+        List<PastLeaderBoard> pastLeaders = pastLeaderBoardService.getPastLeaderBoardSortedByPlaceAtPage(page);
         int pastLeaderBoardCount = pastLeaderBoardService.pastLeaderBoardCount();
         int pagesCount = getPageNumber(pastLeaderBoardCount);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("pastLeaderBoard");
+        modelAndView.setViewName("leaderBoard/pastLeaderBoard");
         modelAndView.addObject("page", page);
         modelAndView.addObject("pastLeaders", pastLeaders);
         modelAndView.addObject("pastLeaderBoardCount", pastLeaderBoardCount);

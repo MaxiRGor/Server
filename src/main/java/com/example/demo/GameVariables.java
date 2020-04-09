@@ -8,8 +8,11 @@ import java.util.List;
 
 public class GameVariables {
 
+    //60 sec
     public static final int TIMEOUT_TO_UPDATE_LEADER_BOARD = 60 * 1000;
+    //7 days
     public static final long TIMEOUT_TO_RENEW_LEADER_BOARD = 7 * 24 * 60 * 60 * 1000;
+    // 3 days
     public static final long TIMEOUT_TO_CLEAR_PAST_LEADER_BOARD = 3 * 24 * 60 * 60 * 1000;
 
     private List<Reward> rewardsForFirstPlaces;

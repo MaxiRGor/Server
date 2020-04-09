@@ -31,8 +31,8 @@ public class ActiveLeaderBoardDAOImpl implements ActiveLeaderBoardDAO{
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<ActiveLeaderBoard> getActiveLeaderBoardAtPage(int page) {
-        return getCurrentSession().createQuery("from ActiveLeaderBoard").setFirstResult((GameVariables.getInstance().getAmountOfItemsOnPage() * (page - 1))).setMaxResults(GameVariables.getInstance().getAmountOfItemsOnPage()).list();
+    public List<ActiveLeaderBoard> getActiveLeaderBoardSortedByPlaceAtPage(int page) {
+        return getCurrentSession().createQuery("from ActiveLeaderBoard order by place asc").setFirstResult((GameVariables.getInstance().getAmountOfItemsOnPage() * (page - 1))).setMaxResults(GameVariables.getInstance().getAmountOfItemsOnPage()).list();
     }
 
     @Override

@@ -27,8 +27,8 @@ public class PastLeaderBoardServiceImpl implements PastLeaderBoardService {
 
     @Override
     @Transactional
-    public List<PastLeaderBoard> getPastLeaderBoardAtPage(int page) {
-        return pastLeaderBoardDAO.getPastLeaderBoardAtPage(page);
+    public List<PastLeaderBoard> getPastLeaderBoardSortedByPlaceAtPage(int page) {
+        return pastLeaderBoardDAO.getPastLeaderBoardSortedByPlaceAtPage(page);
     }
 
     @Override

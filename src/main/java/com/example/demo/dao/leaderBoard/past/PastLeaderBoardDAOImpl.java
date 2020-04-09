@@ -31,8 +31,8 @@ public class PastLeaderBoardDAOImpl implements PastLeaderBoardDAO {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<PastLeaderBoard> getPastLeaderBoardAtPage(int page) {
-        return getCurrentSession().createQuery("from PastLeaderBoard").setFirstResult((GameVariables.getInstance().getAmountOfItemsOnPage() * (page - 1))).setMaxResults(GameVariables.getInstance().getAmountOfItemsOnPage()).list();
+    public List<PastLeaderBoard> getPastLeaderBoardSortedByPlaceAtPage(int page) {
+        return getCurrentSession().createQuery("from PastLeaderBoard order by place asc").setFirstResult((GameVariables.getInstance().getAmountOfItemsOnPage() * (page - 1))).setMaxResults(GameVariables.getInstance().getAmountOfItemsOnPage()).list();
     }
 
     @Override

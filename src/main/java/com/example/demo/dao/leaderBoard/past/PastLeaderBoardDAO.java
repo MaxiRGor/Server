@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PastLeaderBoardDAO {
     List<PastLeaderBoard> getPastLeaderBoard();
-    List<PastLeaderBoard> getPastLeaderBoardAtPage(int page);
+    List<PastLeaderBoard> getPastLeaderBoardSortedByPlaceAtPage(int page);
     List<PastLeaderBoard> getPastLeaderBoardTop(int topCount);
     void add(PastLeaderBoard pastLeaderBoard);
     void delete(PastLeaderBoard pastLeaderBoard);

@@ -26,8 +26,8 @@ public class ActiveLeaderBoardServiceImpl implements ActiveLeaderBoardService {
 
     @Override
     @Transactional
-    public List<ActiveLeaderBoard> getActiveLeaderBoardAtPage(int page) {
-        return activeLeaderBoardDAO.getActiveLeaderBoardAtPage(page);
+    public List<ActiveLeaderBoard> getActiveLeaderBoardSortedByPlaceAtPage(int page) {
+        return activeLeaderBoardDAO.getActiveLeaderBoardSortedByPlaceAtPage(page);
     }
 
     @Override

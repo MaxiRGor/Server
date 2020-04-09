@@ -38,9 +38,9 @@
                 <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
                 <td>
-                    <a href="/users/edit/${user.id}">edit</a>
-                    <a href="/users/delete/${user.id}">delete</a>
-                    <a href="/users/get-json/${user.id}">getJson</a>
+                    <a href="/users/edit/${user.id}">Edit</a>
+                    <a href="/users/delete/${user.id}">Delete</a>
+                    <a href="/users/get/${user.id}">Get json</a>
                 </td>
             </tr>
 
@@ -68,6 +68,16 @@
 <c:url value="/users/create" var="create"/>
 <h4>
     <a href="${create}">Create new user</a>
+</h4>
+
+<c:url value="/users/create-initials" var="createInitials"/>
+<h4>
+    <a href="${createInitials}">TEST CREATE 1000 NEW USERS</a>
+</h4>
+
+<c:url value="/users/set-random-score" var="setScore"/>
+<h4>
+    <a href="${setScore}">TEST SET ALL USERS RANDOM SCORE</a>
 </h4>
 
 <c:url value="/" var="mainPage"/>
