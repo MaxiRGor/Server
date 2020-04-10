@@ -27,7 +27,6 @@ public class ActiveLeaderBoard {
         return user;
     }
 
-    //todo nullable
     @Column(name = "place", columnDefinition = "integer default 0")
     public int getPlace() {
         return place;

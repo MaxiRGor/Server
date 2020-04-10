@@ -1,0 +1,5 @@
+POST  http://localhost:8080/users/add-facebook-data/
+Content-Type: application/json
+
+< facebook-data-with-credentials.json
+###

@@ -4,12 +4,11 @@ import java.io.Serializable;
 
 
 public class UserDataSerialized implements Serializable {
-
     public UserDataSerialized() {
     }
 
     private int id;
-    private boolean isLoginedViaFacebook;
+    private boolean facebookDataAdded;
     private int highScore;
     private int coinsAmount;
     private int crystalsAmount;
@@ -17,9 +16,9 @@ public class UserDataSerialized implements Serializable {
     private int placeInPastLeaderBoard;
     private boolean isRewardTaken;
 
-    public UserDataSerialized(int id, boolean isLoginedViaFacebook, int highScore, int coinsAmount, int crystalsAmount, int placeInActiveLeaderBoard, int placeInPastLeaderBoard, boolean isRewardTaken) {
+    public UserDataSerialized(int id, boolean facebookDataAdded, int highScore, int coinsAmount, int crystalsAmount, int placeInActiveLeaderBoard, int placeInPastLeaderBoard, boolean isRewardTaken) {
         this.id = id;
-        this.isLoginedViaFacebook = isLoginedViaFacebook;
+        this.facebookDataAdded = facebookDataAdded;
         this.highScore = highScore;
         this.coinsAmount = coinsAmount;
         this.crystalsAmount = crystalsAmount;
@@ -27,7 +26,6 @@ public class UserDataSerialized implements Serializable {
         this.placeInPastLeaderBoard = placeInPastLeaderBoard;
         this.isRewardTaken = isRewardTaken;
     }
-
 
     public int getId() {
         return id;
@@ -37,12 +35,12 @@ public class UserDataSerialized implements Serializable {
         this.id = id;
     }
 
-    public boolean isLoginedViaFacebook() {
-        return isLoginedViaFacebook;
+    public boolean isFacebookDataAdded() {
+        return facebookDataAdded;
     }
 
-    public void setLoginedViaFacebook(boolean loginedViaFacebook) {
-        isLoginedViaFacebook = loginedViaFacebook;
+    public void setFacebookDataAdded(boolean facebookDataAdded) {
+        this.facebookDataAdded = facebookDataAdded;
     }
 
     public int getHighScore() {

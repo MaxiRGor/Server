@@ -3,20 +3,16 @@ package com.example.demo.serializedObject;
 import java.io.Serializable;
 
 public class CredentialsSerialized implements Serializable {
+    public CredentialsSerialized() {
+    }
 
     private int userId;
     private String deviceId;
 
-    public CredentialsSerialized(){
-
-    }
-
-    public CredentialsSerialized(int userId, String deviceId){
+    public CredentialsSerialized(int userId, String deviceId) {
         this.userId = userId;
         this.deviceId = deviceId;
-
     }
-
 
     public int getUserId() {
         return userId;

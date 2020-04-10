@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.GameVariables;
+import com.example.demo.model.FacebookData;
 import com.example.demo.model.User;
 import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import com.example.demo.serializedObject.*;
 import com.example.demo.service.user.UserService;
-import com.example.demo.serializedObject.RewardData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,32 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/get/", method = RequestMethod.GET)
+    @RequestMapping(value = "/create-with-facebook-data/", method = RequestMethod.POST)
+    public UserDataSerialized createUserWithFaceBookDataByClient(@RequestBody FacebookDataWithNicknameAndDeviceIdSerialized facebookDataWithNicknameAndDeviceIdSerialized) {
+        return getUserDataSerializedByUser(createUserWithFacebookData(facebookDataWithNicknameAndDeviceIdSerialized));
+    }
+
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/add-facebook-data/", method = RequestMethod.POST)
+    public UserDataSerialized addFacebookDataByClient(@RequestBody FacebookDataWithCredentialsSerialized facebookDataWithCredentialsSerialized) {
+        User user = userService.getById(facebookDataWithCredentialsSerialized.getUserId());
+        System.out.println("here" + user.getNickname());
+        if (checkAuthSuccess(user, new CredentialsSerialized(facebookDataWithCredentialsSerialized.getUserId(),facebookDataWithCredentialsSerialized.getDeviceId())))
+        {
+            setFacebookData(user, new FacebookDataSerialized(facebookDataWithCredentialsSerialized.getFacebookId(),
+                    facebookDataWithCredentialsSerialized.getEmail(),
+                    facebookDataWithCredentialsSerialized.getRealName(),
+                    facebookDataWithCredentialsSerialized.getIconUrl()));
+            return getUserDataSerializedByUser(user);
+        }
+        else return null;
+    }
+
+
+    //by client
+    @ResponseBody
+    @RequestMapping(value = "/get/", method = RequestMethod.POST)
     public UserDataSerialized getUserDataByClient(@RequestBody CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials))
@@ -47,7 +72,7 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/score/add/{score-amount}", method = RequestMethod.GET)
+    @RequestMapping(value = "/score/add/{score-amount}", method = RequestMethod.POST)
     public HighScoreSerialized addScoreByClient(@PathVariable("score-amount") int scoreAmount, @RequestBody CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
@@ -58,33 +83,18 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/coins/add/{coins-amount}", method = RequestMethod.GET)
-    public CoinsAmountSerialized addCoinsByClient(@PathVariable("coins-amount") int coinsAmount, @RequestBody CredentialsSerialized credentials) {
+    @RequestMapping(value = "/coins/change/{coins-amount}", method = RequestMethod.POST)
+    public CoinsAmountSerialized changeCoinsAmountByClient(@PathVariable("coins-amount") int coinsAmount, @RequestBody CredentialsSerialized credentials) {
         return changedCoinsAmount(coinsAmount, credentials);
     }
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/coins/subtract/{coins-amount}", method = RequestMethod.GET)
-    public CoinsAmountSerialized subtractCoinsByClient(@PathVariable("coins-amount") int coinsAmount, @RequestBody CredentialsSerialized credentials) {
-        coinsAmount *= -1;
-        return changedCoinsAmount(coinsAmount, credentials);
-    }
-
-    //by client
-    @ResponseBody
-    @RequestMapping(value = "/crystals/add/{crystals-amount}", method = RequestMethod.GET)
-    public CrystalsAmountSerialized addCrystalsByClient(@PathVariable("crystals-amount") int crystalsAmount, @RequestBody CredentialsSerialized credentials) {
+    @RequestMapping(value = "/crystals/change/{crystals-amount}", method = RequestMethod.POST)
+    public CrystalsAmountSerialized changeCrystalsAmountByClient(@PathVariable("crystals-amount") int crystalsAmount, @RequestBody CredentialsSerialized credentials) {
         return changedCrystalsAmount(crystalsAmount, credentials);
     }
 
-    //by client
-    @ResponseBody
-    @RequestMapping(value = "/crystals/subtract/{crystals-amount}", method = RequestMethod.GET)
-    public CrystalsAmountSerialized subtractCrystalsByClient(@PathVariable("crystals-amount") int crystalsAmount, @RequestBody CredentialsSerialized credentials) {
-        crystalsAmount *= -1;
-        return changedCrystalsAmount(crystalsAmount, credentials);
-    }
 
     //by client
     @ResponseBody
@@ -158,6 +168,41 @@ public class UserController extends DefaultController {
         return getUsersModelAndView(this.page);
     }
 
+    //by admin
+    @RequestMapping(value = "/admin-create-with-facebook-data", method = RequestMethod.GET)
+    public ModelAndView getPageToAddUserWithFacebookData() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("users/createUserWithFacebookDataPage");
+        return modelAndView;
+    }
+
+    //by admin
+    @RequestMapping(value = "/admin-create-with-facebook-data", method = RequestMethod.POST)
+    public ModelAndView getPageAfterAddingUserWithFacebookData(@ModelAttribute("facebookDataAndNicknameAndDeviceIdSerialized") FacebookDataWithNicknameAndDeviceIdSerialized facebookDataWithNicknameAndDeviceIdSerialized) {
+        createUserWithFacebookData(facebookDataWithNicknameAndDeviceIdSerialized);
+        return getUsersModelAndView(this.page);
+    }
+
+    //by admin
+    @RequestMapping(value = "/users/admin-add-facebook-data/{userId}", method = RequestMethod.GET)
+    public ModelAndView getPageToAddUserWithFacebookData(@PathVariable("userId") int userId) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("users/addFacebookData");
+        modelAndView.addObject("userId", userId);
+        return modelAndView;
+    }
+
+    //by admin
+    @RequestMapping(value = "/users/admin-add-facebook-data/", method = RequestMethod.POST)
+    public ModelAndView getPageAfterAddingFacebookDataToUser(@ModelAttribute("facebookDataAndNicknameAndDeviceIdSerialized") FacebookDataWithUserIdSerialized facebookDataWithUserIdSerialized) {
+        User user = userService.getById(facebookDataWithUserIdSerialized.getUserId());
+        setFacebookData(user, new FacebookDataSerialized(facebookDataWithUserIdSerialized.getFacebookId(),
+                facebookDataWithUserIdSerialized.getEmail(),
+                facebookDataWithUserIdSerialized.getRealName(),
+                facebookDataWithUserIdSerialized.getIconUrl()));
+        return getUsersModelAndView(this.page);
+    }
+
 
     //by admin
     @RequestMapping(value = "/admin-delete/{id}", method = RequestMethod.GET)
@@ -196,6 +241,7 @@ public class UserController extends DefaultController {
         rewardUser(userService.getById(id));
     }
 
+
     private CoinsAmountSerialized changedCoinsAmount(int value, CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
@@ -223,7 +269,7 @@ public class UserController extends DefaultController {
 
     private UserDataSerialized getUserDataSerializedByUser(User user) {
         return new UserDataSerialized(user.getId(),
-                false,
+                user.getFacebookData().getFacebookId() != null,
                 user.getHighScore(),
                 user.getCoinsAmount(),
                 user.getCrystalsAmount(),
@@ -236,18 +282,40 @@ public class UserController extends DefaultController {
         return user.getDeviceId().equals(credentials.getDeviceId());
     }
 
+    private User createUserWithFacebookData(FacebookDataWithNicknameAndDeviceIdSerialized facebookDataWithNicknameAndDeviceIdSerialized) {
+        User user = createUser(new NicknameAndDeviceIdSerialized(facebookDataWithNicknameAndDeviceIdSerialized.getNickname(),
+                facebookDataWithNicknameAndDeviceIdSerialized.getDeviceId()));
+        setFacebookData(user, new FacebookDataSerialized(facebookDataWithNicknameAndDeviceIdSerialized.getFacebookId(),
+                facebookDataWithNicknameAndDeviceIdSerialized.getEmail(),
+                facebookDataWithNicknameAndDeviceIdSerialized.getRealName(),
+                facebookDataWithNicknameAndDeviceIdSerialized.getIconUrl()));
+        return user;
+    }
+
+
     private User createUser(NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
         User user = new User();
         ActiveLeaderBoard activeLeaderBoard = new ActiveLeaderBoard();
         PastLeaderBoard pastLeaderBoard = new PastLeaderBoard();
+        FacebookData facebookData = new FacebookData();
         user.setNickname(nicknameAndDeviceIdSerialized.getNickname());
         user.setDeviceId(nicknameAndDeviceIdSerialized.getDeviceId());
         user.setActiveLeaderBoard(activeLeaderBoard);
         user.setPastLeaderBoard(pastLeaderBoard);
+        user.setFacebookData(facebookData);
         activeLeaderBoard.setUser(user);
         pastLeaderBoard.setUser(user);
+        facebookData.setUser(user);
         userService.add(user);
         return user;
+    }
+
+    private void setFacebookData(User user, FacebookDataSerialized facebookDataSerialized) {
+        user.getFacebookData().setEmail(facebookDataSerialized.getEmail());
+        user.getFacebookData().setRealName(facebookDataSerialized.getRealName());
+        user.getFacebookData().setFacebookId(facebookDataSerialized.getFacebookId());
+        user.getFacebookData().setIconUrl(facebookDataSerialized.getIconUrl());
+        userService.edit(user);
     }
 
     private void setHighScore(int score, User user) {

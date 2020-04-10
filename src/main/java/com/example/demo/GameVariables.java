@@ -16,7 +16,7 @@ public class GameVariables {
     public static final long TIMEOUT_TO_CLEAR_PAST_LEADER_BOARD = 3 * 24 * 60 * 60 * 1000;
 
     private List<RewardData> rewardsForFirstPlaces;
-
+    private RewardData defaultReward;
     private int amountOfItemsOnPage;
     private int amountOfLeadersToShow;
     //private int amountOfLeadersToKeepInLeaderBoard;
@@ -31,6 +31,7 @@ public class GameVariables {
         setRewardsForFirstPlaces();
         this.amountOfItemsOnPage = 25;
         this.amountOfLeadersToShow = 100;
+        this.defaultReward =  new RewardData(RewardType.Coins, 100);
         //this.amountOfLeadersToKeepInLeaderBoard = 1000;
     }
 
@@ -65,7 +66,7 @@ public class GameVariables {
     public RewardData getRewardByPlace(int place){
         if(place>0 && place<rewardsForFirstPlaces.size())
             return rewardsForFirstPlaces.get(place-1);
-        else return new RewardData(RewardType.Coins, 100);
+        else return defaultReward;
     }
 
 

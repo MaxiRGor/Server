@@ -3,13 +3,12 @@ package com.example.demo.serializedObject;
 import java.io.Serializable;
 
 public class ActiveLeaderBoardDataSerialized implements Serializable {
+    public ActiveLeaderBoardDataSerialized() {
+    }
 
     private String nickname;
     private int place;
     private int score;
-
-    public ActiveLeaderBoardDataSerialized() {
-    }
 
     public ActiveLeaderBoardDataSerialized(String nickname, int place, int score) {
         this.nickname = nickname;

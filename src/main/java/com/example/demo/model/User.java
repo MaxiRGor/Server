@@ -13,9 +13,7 @@ public class User {
     private int id;
     private String nickname;
     private String deviceId;
-
-    //facebook data todo
-
+    private FacebookData facebookData;
     private ActiveLeaderBoard activeLeaderBoard;
     private PastLeaderBoard pastLeaderBoard;
     private int highScore;
@@ -30,7 +28,7 @@ public class User {
         return id;
     }
 
-    @Column(name = "nickname", columnDefinition = "varchar(30) default 'Anonymous'")
+    @Column(name = "Nickname", columnDefinition = "varchar(30) default 'Anonymous'")
     public String getNickname() {
         return nickname;
     }
@@ -38,6 +36,12 @@ public class User {
     @Column(name = "device_id", columnDefinition = "varchar(60) default 'abc'")
     public String getDeviceId() {
         return deviceId;
+    }
+
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public FacebookData getFacebookData() {
+        return facebookData;
     }
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -66,7 +70,6 @@ public class User {
     }
 
 
-
     public void setId(int id) {
         this.id = id;
     }
@@ -77,6 +80,10 @@ public class User {
 
     public void setDeviceId(String deviceId) {
         this.deviceId = deviceId;
+    }
+
+    public void setFacebookData(FacebookData facebookData) {
+        this.facebookData = facebookData;
     }
 
     public void setActiveLeaderBoard(ActiveLeaderBoard activeLeaderBoard) {

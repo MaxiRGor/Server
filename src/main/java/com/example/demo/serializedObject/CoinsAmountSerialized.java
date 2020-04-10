@@ -3,10 +3,10 @@ package com.example.demo.serializedObject;
 import java.io.Serializable;
 
 public class CoinsAmountSerialized implements Serializable {
-    private int coinsAmount;
-
     public CoinsAmountSerialized() {
     }
+
+    private int coinsAmount;
 
     public CoinsAmountSerialized(int coinsAmount) {
         this.coinsAmount = coinsAmount;

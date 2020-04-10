@@ -3,12 +3,11 @@ package com.example.demo.serializedObject;
 import java.io.Serializable;
 
 public class RewardData implements Serializable {
+    public RewardData() {
+    }
 
     private RewardType rewardType;
     private int rewardAmount;
-
-    public RewardData() {
-    }
 
     public RewardData(RewardType rewardType, int rewardAmount) {
         this.rewardType = rewardType;

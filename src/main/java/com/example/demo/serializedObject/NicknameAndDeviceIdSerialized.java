@@ -3,6 +3,8 @@ package com.example.demo.serializedObject;
 import java.io.Serializable;
 
 public class NicknameAndDeviceIdSerialized implements Serializable {
+    public NicknameAndDeviceIdSerialized() {
+    }
 
     private String nickname;
     private String deviceId;
@@ -12,8 +14,7 @@ public class NicknameAndDeviceIdSerialized implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public NicknameAndDeviceIdSerialized() {
-    }
+
     public String getNickname() {
         return nickname;
     }

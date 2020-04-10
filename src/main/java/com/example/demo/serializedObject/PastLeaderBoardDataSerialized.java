@@ -1,12 +1,11 @@
 package com.example.demo.serializedObject;
 
-public class PastLeaderBoardDataSerialized extends ActiveLeaderBoardDataSerialized
-{
-    private RewardData rewardData;
-    private boolean rewardTaken;
-
+public class PastLeaderBoardDataSerialized extends ActiveLeaderBoardDataSerialized {
     public PastLeaderBoardDataSerialized() {
     }
+
+    private RewardData rewardData;
+    private boolean rewardTaken;
 
     public PastLeaderBoardDataSerialized(String nickname, int place, int score, RewardData rewardData, boolean rewardTaken) {
         super(nickname, place, score);
@@ -29,7 +28,6 @@ public class PastLeaderBoardDataSerialized extends ActiveLeaderBoardDataSerializ
     public void setRewardTaken(boolean rewardTaken) {
         this.rewardTaken = rewardTaken;
     }
-
 
 
 }

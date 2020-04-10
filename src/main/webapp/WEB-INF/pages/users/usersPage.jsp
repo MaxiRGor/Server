@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,8 +14,15 @@
         table, th, td {
             border: 1px solid black;
         }
+
         th, td {
-            padding: 15px;
+            padding: 2px 10px;
+        }
+
+        input {
+            display: inline;
+            padding: 3px 10px;
+            margin: 3px 5px;
         }
     </style>
 </head>
@@ -39,6 +45,7 @@
             <th>High Score</th>
             <th>Coins Amount</th>
             <th>Crystals Amount</th>
+            <th>Is Facebook Data added</th>
             <th>Actions</th>
         </tr>
         <c:forEach var="user" items="${users}">
@@ -51,18 +58,19 @@
                 <td>${user.highScore}</td>
                 <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
+                <td>${user.facebookData.facebookId!=null}</td>
                 <td>
                     <c:url value="/users/admin-edit/${user.id}" var="edit"/>
                     <c:url value="/users/admin-delete/${user.id}" var="delete"/>
                     <c:url value="/users/admin-get/${user.id}" var="getJson"/>
-                    <form action="${getJson}" method="POST">
-                        <input type="submit" value="Get Json">
-                    </form>
-                    <form action="${edit}" method="GET">
-                        <input type="submit" value="Edit">
-                    </form>
-                    <form action="${delete}" method="GET">
-                        <input type="submit" value="Delete">
+                    <c:url value="/users/users/admin-add-facebook-data/${user.id}" var="addFacebookData"/>
+                    <form>
+                        <input formaction="${getJson}" formmethod="post" type="submit" value="Get Json">
+                        <input formaction="${edit}" formmethod="get" type="submit" value="Edit">
+                        <input formaction="${delete}" formmethod="get" type="submit" value="Delete">
+                        <c:if test="${user.facebookData.facebookId==null}">
+                            <input formaction="${addFacebookData}" formmethod="get" type="submit" value="Add Facebook Data">
+                        </c:if>
                     </form>
                 </td>
             </tr>
@@ -85,22 +93,30 @@
     <a href="${url}">${i.index}</a>
 </c:forEach>
 
+
 <br>
 <hr>
-
-<c:url value="/users/admin-create" var="create"/>
-<form action="${create}" method="GET">
-    <input type="submit" value="Create new user">
+<h2>
+    Create users
+</h2>
+<form>
+    <c:url value="/users/admin-create" var="create"/>
+    <c:url value="/users/admin-create-with-facebook-data" var="createWithFacebookData"/>
+    <input formaction="${create}" formmethod="get" type="submit" value="Create new user">
+    <input formaction="${createWithFacebookData}" formmethod="get" type="submit"
+           value="Create new user with facebook data">
 </form>
 
-<c:url value="/users/admin-create-initials" var="createInitials"/>
-<form action="${createInitials}" method="GET">
-    <input type="submit" value="TEST CREATE 1000 NEW USERS">
-</form>
+<hr>
+<h3>
+    Test functions
+</h3>
 
-<c:url value="/users/admin-set-random-score" var="setScore"/>
-<form action="${setScore}" method="GET">
-    <input type="submit" value="TEST SET ALL USERS RANDOM SCORE">
+<form>
+    <c:url value="/users/admin-create-initials" var="createInitials"/>
+    <c:url value="/users/admin-set-random-score" var="setScore"/>
+    <input formaction="${createInitials}" formmethod="get" type="submit" value="Create 1000 new users">
+    <input formaction="${setScore}" formmethod="get" type="submit" value="Set all users random score">
 </form>
 
 </body>
