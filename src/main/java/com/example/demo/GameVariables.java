@@ -1,7 +1,7 @@
 package com.example.demo;
 
-import com.example.demo.util.Reward;
-import com.example.demo.util.RewardType;
+import com.example.demo.serializedObject.RewardData;
+import com.example.demo.serializedObject.RewardType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ public class GameVariables {
     // 3 days
     public static final long TIMEOUT_TO_CLEAR_PAST_LEADER_BOARD = 3 * 24 * 60 * 60 * 1000;
 
-    private List<Reward> rewardsForFirstPlaces;
+    private List<RewardData> rewardsForFirstPlaces;
 
     private int amountOfItemsOnPage;
     private int amountOfLeadersToShow;
@@ -35,37 +35,37 @@ public class GameVariables {
     }
 
 
-    public List<Reward> getRewardsForFirstPlaces() {
+    public List<RewardData> getRewardsForFirstPlaces() {
         return rewardsForFirstPlaces;
     }
 
     private void setRewardsForFirstPlaces() {
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,1000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,750));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,500));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,250));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,100));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,75));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,50));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,25));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,10));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Crystals,5));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,1000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,750));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,500));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,250));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,100));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,75));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,50));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,25));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,10));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Crystals,5));
 
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,10000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,8000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,7500));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,6500));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,5000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,4000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,3000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,2000));
-        this.rewardsForFirstPlaces.add(new Reward(RewardType.Coins,1500));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,10000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,8000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,7500));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,6500));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,5000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,4000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,3000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,2000));
+        this.rewardsForFirstPlaces.add(new RewardData(RewardType.Coins,1500));
     }
 
-    public Reward getRewardByPlace(int place){
+    public RewardData getRewardByPlace(int place){
         if(place>0 && place<rewardsForFirstPlaces.size())
             return rewardsForFirstPlaces.get(place-1);
-        else return new Reward(RewardType.Coins, 100);
+        else return new RewardData(RewardType.Coins, 100);
     }
 
 

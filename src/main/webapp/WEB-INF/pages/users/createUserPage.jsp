@@ -15,7 +15,7 @@
 <h1>
     Create user
 </h1>
-<c:url value="/users/create" var="var"/>
+<c:url value="/users/admin-create" var="var"/>
 <form action="${var}" method="POST">
 
     <label for="nickname">Nickname</label>

@@ -41,7 +41,7 @@
             <th>Place</th>
             <th>Nickname</th>
             <th>Saved score</th>
-            <th>Is reward taken</th>
+            <th>Is rewardData taken</th>
             <th>Action</th>
         </tr>
         <c:forEach var="leader" items="${pastLeaders}">
@@ -53,7 +53,7 @@
                 <td>${leader.rewardTaken}</td>
                 <td>
                     <c:if test="${!leader.rewardTaken}">
-                        <c:url value="/users/perform-reward/${leader.id}" var="var"/>
+                        <c:url value="/users/perform-rewardData/${leader.id}" var="var"/>
                         <form action="${var}" method="POST">
                             <input type="submit" value="Reward">
                         </form>

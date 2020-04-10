@@ -1,3 +1,17 @@
+GET http://localhost:8080/users/get/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+###
+
+GET http://localhost:8080/users/get/
+Content-Type: application/json
+
+< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
+
+###
+
 GET http://localhost:8080/leader-board/past/top
 Content-Type: application/json
 
@@ -331,22 +345,6 @@ Content-Type: application/json
 < F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
 
 <> 2020-04-09T023726.200.json
-
-###
-
-GET http://localhost:8080/users/add-score/1
-Content-Type: application/json
-
-< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
-
-<> 2020-04-09T023702.200.json
-
-###
-
-GET http://localhost:8080/users/add-score/1
-Content-Type: application/json
-
-< F:/DEV/IdeaProjects/TestServer/src/main/webapp/http/credentials.json
 
 ###
 

@@ -38,10 +38,10 @@
         <th>Type</th>
         <th>Amount</th>
     </tr>
-    <c:forEach var="reward" items="${gameVariables.rewardsForFirstPlaces}">
+    <c:forEach var="rewardData" items="${gameVariables.rewardsForFirstPlaces}">
         <tr>
-            <td>${reward.rewardType}</td>
-            <td>${reward.rewardAmount}</td>
+            <td>${rewardData.rewardType}</td>
+            <td>${rewardData.rewardAmount}</td>
         </tr>
 
     </c:forEach>

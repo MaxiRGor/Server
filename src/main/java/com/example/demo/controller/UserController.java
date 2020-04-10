@@ -6,7 +6,7 @@ import com.example.demo.model.leaderBoard.ActiveLeaderBoard;
 import com.example.demo.model.leaderBoard.PastLeaderBoard;
 import com.example.demo.serializedObject.*;
 import com.example.demo.service.user.UserService;
-import com.example.demo.util.Reward;
+import com.example.demo.serializedObject.RewardData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/create/", method = RequestMethod.GET)
+    @RequestMapping(value = "/create/", method = RequestMethod.POST)
     public UserDataSerialized createUserByClient(@RequestBody NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
         if (isNicknameNormal())
             return getUserDataSerializedByUser(createUser(nicknameAndDeviceIdSerialized));
@@ -116,14 +116,14 @@ public class UserController extends DefaultController {
 
     //by admin
     @ResponseBody
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-get/{id}", method = RequestMethod.POST)
     public UserDataSerialized getPageWithUserData(@PathVariable("id") int id) {
         User user = userService.getById(id);
         return getUserDataSerializedByUser(user);
     }
 
     //by admin
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-edit/{id}", method = RequestMethod.GET)
     public ModelAndView getPageToEditUser(@PathVariable("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users/editUserPage");
@@ -132,7 +132,7 @@ public class UserController extends DefaultController {
     }
 
     //by admin
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-edit", method = RequestMethod.POST)
     public ModelAndView getPageAfterEditingUser(@ModelAttribute("user") User changedUser) {
         User user = userService.getById(changedUser.getId());
         user.setNickname(changedUser.getNickname());
@@ -144,7 +144,7 @@ public class UserController extends DefaultController {
     }
 
     //by admin
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-create", method = RequestMethod.GET)
     public ModelAndView getPageToAddUser() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("users/createUserPage");
@@ -152,7 +152,7 @@ public class UserController extends DefaultController {
     }
 
     //by admin
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-create", method = RequestMethod.POST)
     public ModelAndView getPageAfterAddingUser(@ModelAttribute("nicknameAndDeviceId") NicknameAndDeviceIdSerialized nicknameAndDeviceIdSerialized) {
         createUser(nicknameAndDeviceIdSerialized);
         return getUsersModelAndView(this.page);
@@ -160,14 +160,14 @@ public class UserController extends DefaultController {
 
 
     //by admin
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-delete/{id}", method = RequestMethod.GET)
     public ModelAndView getPageAfterDeletingUser(@PathVariable("id") int id) {
         userService.delete(userService.getById(id));
         return getUsersModelAndView(this.page);
     }
 
     //by admin
-    @RequestMapping(value = "/set-random-score", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-set-random-score", method = RequestMethod.GET)
     public ModelAndView TEST_GET_PAGE_AFTER_SETTING_RANDOM_SCORE() {
         List<User> users = userService.getAllUsers();
         for (User user : users) {
@@ -178,7 +178,7 @@ public class UserController extends DefaultController {
     }
 
     //by admin
-    @RequestMapping(value = "/create-initials", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin-create-initials", method = RequestMethod.GET)
     public ModelAndView TEST_GET_PAGE_AFTER_CREATING_USERS() {
         int TEST_INITIAL_USERS_AMOUNT = 1000;
         for (int i = 0; i < TEST_INITIAL_USERS_AMOUNT; i++) {
@@ -191,7 +191,7 @@ public class UserController extends DefaultController {
 
     //by admin
     @ResponseBody
-    @RequestMapping(value = "/perform-reward/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin-perform-reward/{id}", method = RequestMethod.POST)
     public void rewardUserByAdmin(@PathVariable("id") int id) {
         rewardUser(userService.getById(id));
     }
@@ -258,13 +258,13 @@ public class UserController extends DefaultController {
 
     private void rewardUser(User user) {
         if (!user.getPastLeaderBoard().isRewardTaken()) {
-            Reward reward = GameVariables.getInstance().getRewardByPlace(user.getPastLeaderBoard().getPlace());
-            switch (reward.getRewardType()) {
+            RewardData rewardData = GameVariables.getInstance().getRewardByPlace(user.getPastLeaderBoard().getPlace());
+            switch (rewardData.getRewardType()) {
                 case Coins:
-                    user.setCoinsAmount(user.getCoinsAmount() + reward.getRewardAmount());
+                    user.setCoinsAmount(user.getCoinsAmount() + rewardData.getRewardAmount());
                     break;
                 case Crystals:
-                    user.setCrystalsAmount(user.getCrystalsAmount() + reward.getRewardAmount());
+                    user.setCrystalsAmount(user.getCrystalsAmount() + rewardData.getRewardAmount());
                     break;
             }
             user.getPastLeaderBoard().setRewardTaken(true);

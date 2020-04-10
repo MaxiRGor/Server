@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 public class NicknameAndDeviceIdSerialized implements Serializable {
 
+    private String nickname;
+    private String deviceId;
+
     public NicknameAndDeviceIdSerialized(String nickname, String deviceId) {
         this.nickname = nickname;
         this.deviceId = deviceId;
@@ -11,10 +14,6 @@ public class NicknameAndDeviceIdSerialized implements Serializable {
 
     public NicknameAndDeviceIdSerialized() {
     }
-
-    private String nickname;
-    private String deviceId;
-
     public String getNickname() {
         return nickname;
     }

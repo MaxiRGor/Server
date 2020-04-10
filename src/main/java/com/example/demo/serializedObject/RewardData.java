@@ -1,16 +1,16 @@
-package com.example.demo.util;
+package com.example.demo.serializedObject;
 
 import java.io.Serializable;
 
-public class Reward implements Serializable {
+public class RewardData implements Serializable {
 
     private RewardType rewardType;
     private int rewardAmount;
 
-    public Reward() {
+    public RewardData() {
     }
 
-    public Reward(RewardType rewardType, int rewardAmount) {
+    public RewardData(RewardType rewardType, int rewardAmount) {
         this.rewardType = rewardType;
         this.rewardAmount = rewardAmount;
     }

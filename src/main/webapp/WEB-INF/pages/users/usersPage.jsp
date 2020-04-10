@@ -52,10 +52,10 @@
                 <td>${user.coinsAmount}</td>
                 <td>${user.crystalsAmount}</td>
                 <td>
-                    <c:url value="/users/edit/${user.id}" var="edit"/>
-                    <c:url value="/users/delete/${user.id}" var="delete"/>
-                    <c:url value="/users/get/${user.id}" var="getJson"/>
-                    <form action="${getJson}" method="GET">
+                    <c:url value="/users/admin-edit/${user.id}" var="edit"/>
+                    <c:url value="/users/admin-delete/${user.id}" var="delete"/>
+                    <c:url value="/users/admin-get/${user.id}" var="getJson"/>
+                    <form action="${getJson}" method="POST">
                         <input type="submit" value="Get Json">
                     </form>
                     <form action="${edit}" method="GET">
@@ -88,17 +88,17 @@
 <br>
 <hr>
 
-<c:url value="/users/create" var="create"/>
+<c:url value="/users/admin-create" var="create"/>
 <form action="${create}" method="GET">
     <input type="submit" value="Create new user">
 </form>
 
-<c:url value="/users/create-initials" var="createInitials"/>
+<c:url value="/users/admin-create-initials" var="createInitials"/>
 <form action="${createInitials}" method="GET">
     <input type="submit" value="TEST CREATE 1000 NEW USERS">
 </form>
 
-<c:url value="/users/set-random-score" var="setScore"/>
+<c:url value="/users/admin-set-random-score" var="setScore"/>
 <form action="${setScore}" method="GET">
     <input type="submit" value="TEST SET ALL USERS RANDOM SCORE">
 </form>

@@ -15,7 +15,7 @@
 <h1>
     Edit user
 </h1>
-<c:url value="/users/edit" var="var"/>
+<c:url value="/users/admin-edit" var="var"/>
 <form action="${var}" method="POST">
 
     <input type="hidden" name="id"  value="${user.id}" >

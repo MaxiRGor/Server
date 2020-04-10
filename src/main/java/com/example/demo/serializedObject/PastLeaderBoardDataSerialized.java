@@ -1,27 +1,25 @@
 package com.example.demo.serializedObject;
 
-import com.example.demo.util.Reward;
-
 public class PastLeaderBoardDataSerialized extends ActiveLeaderBoardDataSerialized
 {
-    private Reward reward;
+    private RewardData rewardData;
     private boolean rewardTaken;
 
     public PastLeaderBoardDataSerialized() {
     }
 
-    public PastLeaderBoardDataSerialized(String nickname, int place, int score, Reward reward, boolean rewardTaken) {
+    public PastLeaderBoardDataSerialized(String nickname, int place, int score, RewardData rewardData, boolean rewardTaken) {
         super(nickname, place, score);
-        this.reward = reward;
+        this.rewardData = rewardData;
         this.rewardTaken = rewardTaken;
     }
 
-    public Reward getReward() {
-        return reward;
+    public RewardData getRewardData() {
+        return rewardData;
     }
 
-    public void setReward(Reward reward) {
-        this.reward = reward;
+    public void setRewardData(RewardData rewardData) {
+        this.rewardData = rewardData;
     }
 
     public boolean isRewardTaken() {
