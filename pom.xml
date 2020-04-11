@@ -8,12 +8,12 @@
         <version>2.2.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.example</groupId>
-    <artifactId>demo</artifactId>
+    <groupId>com.dksoft</groupId>
+    <artifactId>formshift</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <name>demo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Server for FormShiftApp</description>
 
     <properties>
         <java.version>1.8</java.version>
