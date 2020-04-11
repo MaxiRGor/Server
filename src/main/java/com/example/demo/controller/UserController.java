@@ -98,7 +98,7 @@ public class UserController extends DefaultController {
 
     //by client
     @ResponseBody
-    @RequestMapping(value = "/perform-reward/", method = RequestMethod.GET)
+    @RequestMapping(value = "/perform-reward/", method = RequestMethod.POST)
     public CurrencyAmountSerialized rewardUserByClient(@RequestBody CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
@@ -255,7 +255,7 @@ public class UserController extends DefaultController {
     private CrystalsAmountSerialized changedCrystalsAmount(int value, CredentialsSerialized credentials) {
         User user = userService.getById(credentials.getUserId());
         if (checkAuthSuccess(user, credentials)) {
-            user.setCoinsAmount(user.getCrystalsAmount() + value);
+            user.setCrystalsAmount(user.getCrystalsAmount() + value);
             userService.edit(user);
             return new CrystalsAmountSerialized(user.getCrystalsAmount());
         } else return null;

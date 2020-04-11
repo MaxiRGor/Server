@@ -31,7 +31,7 @@ public class GameVariables {
         setRewardsForFirstPlaces();
         this.amountOfItemsOnPage = 25;
         this.amountOfLeadersToShow = 100;
-        this.defaultReward =  new RewardData(RewardType.Coins, 100);
+        this.defaultReward =  new RewardData(RewardType.Coins, 1);
         //this.amountOfLeadersToKeepInLeaderBoard = 1000;
     }
 
